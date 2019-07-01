@@ -20,8 +20,10 @@ $ composer require digipolisgent/api-client
 
 ## Usage
 
-TODO
+See the examples of service packages how to use this package:
 
+* [gent/services/openinghours](https://github.com/StadGent/php_package_services-opening-hours)
+  : Service to access the Opening Hours API and wrap the responses in value objects.
 
 ## Change log
 
@@ -41,5 +43,5 @@ $ vendor/bin/phpunit
 
 
 ## License
-The MIT License (MIT). 
+The MIT License (MIT).
 Please see [License File](LICENSE.md) for more information.
