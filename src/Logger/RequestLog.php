@@ -9,7 +9,7 @@ class RequestLog implements LogInterface
     /**
      * @var RequestInterface
      */
-    private $request;
+    protected $request;
 
     /**
      * RequestLog constructor.
