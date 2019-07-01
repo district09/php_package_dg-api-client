@@ -14,7 +14,7 @@ class InvalidResponse extends Exception
     /**
      * @var array
      */
-    private $data = [];
+    protected $data = [];
 
     /**
      * InvalidResponse constructor.

@@ -16,7 +16,7 @@ trait LoggableTrait
      *
      * @var LoggerInterface[]
      */
-    private $loggers = array();
+    protected $loggers = array();
 
     /**
      * Add a logger to an object.

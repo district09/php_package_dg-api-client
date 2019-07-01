@@ -8,7 +8,7 @@ class ResponseLog implements LogInterface
     /**
      * @var ResponseInterface
      */
-    private $response;
+    protected $response;
 
     /**
      * ResponseLog constructor.
