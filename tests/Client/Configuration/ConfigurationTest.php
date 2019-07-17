@@ -3,11 +3,11 @@
 namespace DigipolisGent\API\Tests\Client\Configuration;
 
 use DigipolisGent\API\Client\Configuration\Configuration;
-use DigipolisGent\API\Client\Credentials\Credentials;
 use PHPUnit\Framework\TestCase;
 
 class ConfigurationTest extends TestCase
 {
+
     /**
      * Test constructor without options.
      */

@@ -38,15 +38,16 @@ class InvalidResponse extends Exception
     {
         $body = (string)$response->getBody();
         $data = json_decode($body, true);
+        $statusCode = $response->getStatusCode();
 
         return new static(
             sprintf(
                 'Response with status code %s was unexpected : \'%s\'',
-                $response->getStatusCode(),
+                $statusCode,
                 $body
             ),
             $data,
-            $response->getStatusCode()
+            $statusCode
         );
     }
 
