@@ -24,7 +24,7 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
     /**
      * @var Handler\HandlerInterface[]
      */
-    protected $handlers;
+    protected $handlers = [];
 
     /**
      * @var \GuzzleHttp\Client
@@ -81,10 +81,6 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
      */
     protected function injectHeaders(RequestInterface $request)
     {
-        if (!$request->hasHeader('Endpoint-Version')) {
-            $request->withHeader('Endpoint-Version', $this->configuration->getVersion());
-        }
-
         return $request
             ->withHeader('Accept', $this->configuration->getAcceptType())
             ->withHeader('Content-Type', $this->configuration->getContentType())

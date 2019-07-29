@@ -20,6 +20,11 @@ abstract class ServiceAbstract implements ServiceInterface, LoggableInterface
      */
     protected $client;
 
+    /**
+     * @param ClientInterface $client
+     *
+     * @codeCoverageIgnore
+     */
     public function __construct(ClientInterface $client)
     {
         $this->client = $client;
