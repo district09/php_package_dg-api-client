@@ -6,12 +6,12 @@ use DigipolisGent\API\Client\AbstractClient;
 use DigipolisGent\API\Client\Configuration\Configuration;
 use DigipolisGent\API\Client\Exception\HandlerNotFound;
 use DigipolisGent\API\Client\Handler\HandlerInterface;
-use DigipolisGent\API\Client\Request\RequestInterface;
 use DigipolisGent\API\Client\Response\ResponseInterface;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\ClientException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 
 class ClientTest extends TestCase

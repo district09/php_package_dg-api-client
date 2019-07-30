@@ -3,8 +3,8 @@
 namespace DigipolisGent\API\Client;
 
 use DigipolisGent\API\Client\Handler\HandlerInterface;
-use DigipolisGent\API\Client\Request\RequestInterface;
 use DigipolisGent\API\Client\Response\ResponseInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Client Interface.
@@ -28,7 +28,7 @@ interface ClientInterface
 
     /**
      * Adds a Handler to the Client
-     * 
+     *
      * @param HandlerInterface $handler
      * @return ClientInterface
      */

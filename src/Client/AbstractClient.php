@@ -51,11 +51,11 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
     /**
      * Sends a Request and returns the appropriate Response
      *
-     * @param Request\RequestInterface $request
+     * @param RequestInterface $request
      * @return Response\ResponseInterface
      * @throws HandlerNotFound
      */
-    public function send(Request\RequestInterface $request)
+    public function send(RequestInterface $request)
     {
         $psrRequest  = $this->injectHeaders($request);
 
@@ -91,11 +91,11 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
     /**
      * Returns the correct handler for the given Request-object
      *
-     * @param Request\RequestInterface $request
+     * @param RequestInterface $request
      * @return Handler\HandlerInterface
      * @throws HandlerNotFound
      */
-    protected function getHandler(Request\RequestInterface $request)
+    protected function getHandler(RequestInterface $request)
     {
         if (array_key_exists(get_class($request), $this->handlers)) {
             return $this->handlers[get_class($request)];

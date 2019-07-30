@@ -4,6 +4,13 @@ All Notable changes to `digipolisgent/api-client` package.
 
 ## [Unreleased]
 
+### Added
+
+* AccepType enum
+* MethodType enum
+* Uri component
+* AbstractRequest
+
 ## [1.0.0]
 
 Initial release of the digipolisgent/api-client package.
