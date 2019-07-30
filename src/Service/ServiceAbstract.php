@@ -2,6 +2,8 @@
 
 namespace DigipolisGent\API\Service;
 
+use DigipolisGent\API\Cache\CacheableInterface;
+use DigipolisGent\API\Cache\CacheableTrait;
 use DigipolisGent\API\Client\ClientInterface;
 use DigipolisGent\API\Logger\LoggableInterface;
 use DigipolisGent\API\Logger\LoggableTrait;
@@ -11,9 +13,10 @@ use DigipolisGent\API\Logger\LoggableTrait;
  *
  * @package DigipolisGent\API\Service
  */
-abstract class ServiceAbstract implements ServiceInterface, LoggableInterface
+abstract class ServiceAbstract implements ServiceInterface, LoggableInterface, CacheableInterface
 {
     use LoggableTrait;
+    use CacheableTrait;
 
     /**
      * @var ClientInterface
