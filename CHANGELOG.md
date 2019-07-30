@@ -2,6 +2,8 @@
 
 All Notable changes to `digipolisgent/api-client` package.
 
+## [Unreleased]
+
 ## [1.0.0]
 
 Initial release of the digipolisgent/api-client package.
