@@ -29,18 +29,4 @@ interface ConfigurationInterface
      * @return int
      */
     public function getTimeout();
-
-    /**
-     * Get the content type, used for request headers.
-     *
-     * @return string
-     */
-    public function getContentType();
-
-    /**
-     * Get the accept type, used for request headers.
-     *
-     * @return string
-     */
-    public function getAcceptType();
 }
