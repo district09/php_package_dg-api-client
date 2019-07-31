@@ -82,8 +82,6 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
     protected function injectHeaders(RequestInterface $request)
     {
         return $request
-            ->withHeader('Accept', $this->configuration->getAcceptType())
-            ->withHeader('Content-Type', $this->configuration->getContentType())
             ->withHeader('Content-Length', strlen((string)$request->getBody()))
         ;
     }

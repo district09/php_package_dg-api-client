@@ -2,6 +2,8 @@
 
 All Notable changes to `digipolisgent/api-client` package.
 
+## [Unreleased]
+
 ## [1.1.0]
 
 ### Added
@@ -13,6 +15,7 @@ All Notable changes to `digipolisgent/api-client` package.
 * Allow handlers to support multiple request types
 * Code of Conduct
 * Security guidelines
+* Make the request, not the client, responsible for Accept and Content-Type headers
 
 ## [1.0.0]
 
