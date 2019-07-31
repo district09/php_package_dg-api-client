@@ -2,6 +2,18 @@
 
 All Notable changes to `digipolisgent/api-client` package.
 
+## [1.1.0]
+
+### Added
+
+* AccepType enum
+* MethodType enum
+* Uri component
+* AbstractRequest
+* Allow handlers to support multiple request types
+* Code of Conduct
+* Security guidelines
+
 ## [1.0.0]
 
 Initial release of the digipolisgent/api-client package.
@@ -14,4 +26,5 @@ This includes:
 * Interfaces to create services in client packages.
 
 [Unreleased]: https://github.com/digipolisgent/php_package_dg-api-client/compare/master...develop
+[1.1.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/digipolisgent/php_package_dg-api-client/releases/tag/1.0.0

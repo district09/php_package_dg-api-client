@@ -3,37 +3,35 @@
 namespace DigipolisGent\API\Client\Request;
 
 /**
- * Interface RequestInterface.
- *
- * @package DigipolisGent\API\Client\Request
+ * The different Method types.
  */
-interface RequestInterface extends \Psr\Http\Message\RequestInterface
+class MethodType
 {
     /**
      * GET sending method.
      *
      * @var string
      */
-    const METHOD_GET = 'GET';
+    const GET = 'GET';
 
     /**
      * POST sending method.
      *
      * @var string
      */
-    const METHOD_POST = 'POST';
+    const POST = 'POST';
 
     /**
      * PUT sending method.
      *
      * @var string
      */
-    const METHOD_PUT = 'PUT';
+    const PUT = 'PUT';
 
     /**
      * DELETE sending method.
      *
      * @var string
      */
-    const METHOD_DELETE  = 'DELETE';
+    const DELETE  = 'DELETE';
 }

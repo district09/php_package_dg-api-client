@@ -7,16 +7,16 @@ use Psr\Http\Message as Psr;
 
 /**
  * Handlers transform PSR7-Response object to GentServices Response objects
- * 
+ *
  * @package DigipolisGent\API\Client\Handler
  */
 interface HandlerInterface
 {
     /**
-     * Returns the classname of the request this handler handles
-     *      eg: AuthRequest::class
+     * Returns the classnames of the request this handler handles
+     *      eg: [AuthRequest::class]
      *
-     * @return string
+     * @return string[]
      */
     public function handles();
 

@@ -3,8 +3,8 @@
 namespace DigipolisGent\API\Tests\Client\Exception;
 
 use DigipolisGent\API\Client\Exception\HandlerNotFound;
-use DigipolisGent\API\Client\Request\RequestInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 
 class HandlerNotFoundTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 namespace DigipolisGent\API\Client\Exception;
 
-use DigipolisGent\API\Client\Request\RequestInterface;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Class HandlerNotFound
