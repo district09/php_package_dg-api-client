@@ -112,7 +112,10 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
      */
     public function addHandler(Handler\HandlerInterface $handler)
     {
-        $this->handlers[$handler->handles()] = $handler;
+        $requestTypes = (array) $handler->handles();
+        foreach ($requestTypes as $requestType) {
+            $this->handlers[$requestType] = $handler;
+        }
         return $this;
     }
 }

@@ -10,6 +10,7 @@ All Notable changes to `digipolisgent/api-client` package.
 * MethodType enum
 * Uri component
 * AbstractRequest
+* Allow handlers to support multiple request types
 
 ## [1.0.0]
 
