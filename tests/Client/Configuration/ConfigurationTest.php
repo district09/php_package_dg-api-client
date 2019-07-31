@@ -29,16 +29,6 @@ class ConfigurationTest extends TestCase
             $configuration->getTimeout(),
             'Default timeout is 20s.'
         );
-        $this->assertEquals(
-            'application/json',
-            $configuration->getContentType(),
-            'Default content type is "application/json".'
-        );
-        $this->assertEquals(
-            'application/json',
-            $configuration->getAcceptType(),
-            'Default accept type is "application/json".'
-        );
     }
 
     /**
@@ -49,8 +39,6 @@ class ConfigurationTest extends TestCase
         $options = array(
             'version' => 2,
             'timeout' => 10,
-            'contentType' => 'application/soap',
-            'acceptType' => 'application/xml',
             'foo' => 'bar',
         );
         $configuration = new Configuration(
@@ -68,16 +56,6 @@ class ConfigurationTest extends TestCase
             $options['timeout'],
             $configuration->getTimeout(),
             'Timeout is set to custom value.'
-        );
-        $this->assertEquals(
-            $options['contentType'],
-            $configuration->getContentType(),
-            'Content type is set to custom value.'
-        );
-        $this->assertEquals(
-            $options['acceptType'],
-            $configuration->getAcceptType(),
-            'Accept type is set to custom value.'
         );
     }
 }

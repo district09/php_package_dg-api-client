@@ -20,8 +20,6 @@ class Configuration implements ConfigurationInterface
     protected $options = array(
         'version' => 1,
         'timeout' => 20,
-        'contentType' => 'application/json',
-        'acceptType' => 'application/json',
     );
 
     /**
@@ -62,21 +60,5 @@ class Configuration implements ConfigurationInterface
     public function getTimeout()
     {
         return $this->options['timeout'];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getContentType()
-    {
-        return $this->options['contentType'];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAcceptType()
-    {
-        return $this->options['acceptType'];
     }
 }
