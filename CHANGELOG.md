@@ -2,7 +2,15 @@
 
 All Notable changes to `digipolisgent/api-client` package.
 
-## [Unreleased]
+## [1.2.0]
+
+### Added
+
+- Added code style checks.
+
+### Changed
+
+- Allow setting a TTL for cache entries.
 
 ## [1.1.0]
 
@@ -29,5 +37,6 @@ This includes:
 * Interfaces to create services in client packages.
 
 [Unreleased]: https://github.com/digipolisgent/php_package_dg-api-client/compare/master...develop
+[1.2.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/digipolisgent/php_package_dg-api-client/releases/tag/1.0.0

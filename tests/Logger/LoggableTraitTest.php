@@ -17,7 +17,7 @@ class LoggableTraitTest extends TestCase
      */
     protected $log;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->log = $this->getMockBuilder(LogInterface::class)->getMock();

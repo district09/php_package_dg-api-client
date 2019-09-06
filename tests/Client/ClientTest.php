@@ -56,7 +56,8 @@ class ClientTest extends TestCase
      */
     protected $response;
 
-    protected function setUp() {
+    protected function setUp(): void
+    {
         parent::setUp();
 
         // Create mocks.
@@ -75,23 +76,26 @@ class ClientTest extends TestCase
         $this->handler->expects($this->any())->method('toResponse')->with($this->psrResponse)->willReturn($this->response);
     }
 
-    public function testSendWithoutHandlers() {
+    public function testSendWithoutHandlers()
+    {
         $this->expectException(HandlerNotFound::class);
         $this->request->expects($this->any())->method('withHeader')->willReturnSelf();
         $this->client->send($this->request);
     }
 
-    public function testSendWithHandlers() {
+    public function testSendWithHandlers()
+    {
         $this->request->expects($this->any())->method('withHeader')->willReturnSelf();
         $this->client->addHandler($this->handler);
         $this->assertEquals($this->response, $this->client->send($this->request));
     }
 
-    public function testFailedSendWithHandlers() {
-      $this->request->expects($this->any())->method('withHeader')->willReturnSelf();
-      $this->client->addHandler($this->handler);
-      $exception = new ClientException('', $this->request, $this->psrResponse);
-      $this->guzzle->expects($this->any())->method('send')->willThrowException($exception);
-      $this->assertEquals($this->response, $this->client->send($this->request));
+    public function testFailedSendWithHandlers()
+    {
+        $this->request->expects($this->any())->method('withHeader')->willReturnSelf();
+        $this->client->addHandler($this->handler);
+        $exception = new ClientException('', $this->request, $this->psrResponse);
+        $this->guzzle->expects($this->any())->method('send')->willThrowException($exception);
+        $this->assertEquals($this->response, $this->client->send($this->request));
     }
 }

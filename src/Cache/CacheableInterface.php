@@ -16,5 +16,5 @@ interface CacheableInterface
    *
    * @param CacheInterface $cache
    */
-  public function setCacheService(CacheInterface $cache);
+    public function setCacheService(CacheInterface $cache);
 }
