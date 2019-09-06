@@ -40,6 +40,10 @@ trait CacheableTrait
      *   The cache key to store the value in.
      * @param mixed $value
      *   The value to cache.
+     * @param null|int|\DateInterval $ttl
+     *   Optional. The TTL value of this item. If no value is sent and the
+     *   driver supports TTL then the library may set a default value for it or
+     *   let the driver take care of that.
      *
      * @return bool
      *   Item is cached.
@@ -47,13 +51,13 @@ trait CacheableTrait
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *   If the $key string is not a legal value.
      */
-    protected function cacheSet($key, $value)
+    protected function cacheSet($key, $value, $ttl = null)
     {
         if (!$this->cache) {
             return false;
         }
 
-        return $this->cache->set($key, $value);
+        return $this->cache->set($key, $value, $ttl);
     }
 
     /**
