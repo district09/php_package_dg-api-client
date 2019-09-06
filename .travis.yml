@@ -14,7 +14,7 @@ install:
   - composer install -n --dev
 
 script:
-  - vendor/bin/phpunit
+  - vendor/bin/grumphp run
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
