@@ -11,7 +11,6 @@ class Configuration implements ConfigurationInterface
      */
     protected $endpointUri;
 
-
     /**
      * The configuration options.
      *

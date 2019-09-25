@@ -11,10 +11,10 @@ use Psr\SimpleCache\CacheInterface;
  */
 interface CacheableInterface
 {
-  /**
-   * Set the cache service.
-   *
-   * @param CacheInterface $cache
-   */
+    /**
+     * Set the cache service.
+     *
+     * @param CacheInterface $cache
+     */
     public function setCacheService(CacheInterface $cache);
 }

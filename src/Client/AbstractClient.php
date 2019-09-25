@@ -15,7 +15,6 @@ use Psr\Http\Message\RequestInterface;
  * Class ClientAbstract.
  *
  * @package DigipolisGent\API\Client
-
  */
 abstract class AbstractClient implements ClientInterface, LoggableInterface
 {
