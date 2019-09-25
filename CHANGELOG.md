@@ -6,11 +6,11 @@ All Notable changes to `digipolisgent/api-client` package.
 
 ### Added
 
-- Added code style checks.
+* Added code style checks.
 
 ### Changed
 
-- Allow setting a TTL for cache entries.
+* Allow setting a TTL for cache entries.
 
 ## [1.1.0]
 
