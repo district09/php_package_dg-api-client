@@ -37,11 +37,6 @@ class ClientTest extends TestCase
     protected $configuration;
 
     /**
-     * @var \DigipolisGent\API\Client\AbstractClient
-     */
-    protected $client;
-
-    /**
      * @var \Psr\Http\Message\RequestInterface
      */
     protected $request;

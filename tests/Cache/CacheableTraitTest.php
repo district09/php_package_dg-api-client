@@ -33,7 +33,7 @@ class CacheableTraitTest extends TestCase
      *
      * @test
      */
-    public function cacheDeletetWithoutCache(): void
+    public function cacheDeletedWithoutCache(): void
     {
         $key = uniqid();
 
@@ -88,7 +88,7 @@ class CacheableTraitTest extends TestCase
      *
      * @test
      */
-    public function cacheDeletetWithCache(): void
+    public function cacheDeletedWithCache(): void
     {
         $key = uniqid();
 

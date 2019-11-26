@@ -29,7 +29,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @inheritDoc
      */
-    public function __construct($endpointUri, array $options = array())
+    public function __construct($endpointUri, array $options = [])
     {
         $this->endpointUri = $endpointUri;
 

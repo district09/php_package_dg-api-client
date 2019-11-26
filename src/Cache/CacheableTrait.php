@@ -47,11 +47,10 @@ trait CacheableTrait
      *   Item is cached.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *   If the $key string is not a legal value.
      */
     protected function cacheSet(string $key, $value, $ttl = null): bool
     {
-        if (!$this->cache) {
+        if ($this->cache === null) {
             return false;
         }
 
@@ -71,11 +70,10 @@ trait CacheableTrait
      *   Item is deleted.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *   If the $key string is not a legal value.
      */
     protected function cacheDelete(string $key): bool
     {
-        if (!$this->cache) {
+        if ($this->cache === null) {
             return false;
         }
 
@@ -90,7 +88,7 @@ trait CacheableTrait
      */
     protected function cacheClear(): bool
     {
-        if (!$this->cache) {
+        if ($this->cache === null) {
             return false;
         }
 
@@ -112,11 +110,10 @@ trait CacheableTrait
      *   Cached value or default if no cache for the item.
      *
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     *   If the $key string is not a legal value.
      */
     protected function cacheGet(string $key, $default = null)
     {
-        if (!$this->cache) {
+        if ($this->cache === null) {
             return null;
         }
 

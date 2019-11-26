@@ -43,11 +43,11 @@ class ConfigurationTest extends TestCase
      */
     public function constructorWithOptions(): void
     {
-        $options = array(
+        $options = [
             'version' => 2,
             'timeout' => 10,
             'foo' => 'bar',
-        );
+        ];
         $configuration = new Configuration(
             'https://foo.com',
             $options

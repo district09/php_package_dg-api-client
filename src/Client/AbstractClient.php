@@ -11,7 +11,6 @@ use DigipolisGent\API\Client\Response\ResponseInterface;
 use DigipolisGent\API\Logger\LoggableInterface;
 use DigipolisGent\API\Logger\LoggableTrait;
 use DigipolisGent\API\Logger\RequestLog;
-use DigipolisGent\API\Logger\ResponseLog;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\RequestInterface;
@@ -33,7 +32,7 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
     /**
      * Guzzle HTTP client.
      *
-     * @var \GuzzleHttp\Client
+     * @var \GuzzleHttp\ClientInterface
      */
     protected $guzzle;
 
@@ -79,8 +78,6 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
             $psrResponse = $e->getResponse();
         }
 
-        $this->log(new ResponseLog($psrResponse));
-
         return $handler->toResponse($psrResponse);
     }
 
@@ -93,9 +90,10 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
      */
     protected function injectHeaders(RequestInterface $request): RequestInterface
     {
-        return $request
-            ->withHeader('Content-Length', strlen((string) $request->getBody()))
-        ;
+        return $request->withHeader(
+            'Content-Length',
+            (string) strlen((string) $request->getBody())
+        );
     }
 
     /**

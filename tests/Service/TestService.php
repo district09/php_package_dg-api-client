@@ -6,7 +6,6 @@ namespace Gent\Tests\API\Service;
 
 use DigipolisGent\API\Client\ClientInterface;
 use DigipolisGent\API\Service\ServiceAbstract;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Test class to validate the ServiceAbstract.

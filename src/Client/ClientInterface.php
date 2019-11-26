@@ -10,8 +10,6 @@ use Psr\Http\Message\RequestInterface;
  * Client Interface.
  *
  * This is a wrapper around the actual used HTTP request (Guzzle, Drupal, …).
- *
- * @package DigipolisGent\API\Client
  */
 interface ClientInterface
 {
