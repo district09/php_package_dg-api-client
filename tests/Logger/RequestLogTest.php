@@ -1,30 +1,42 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Tests\Logger;
 
 use DigipolisGent\API\Logger\RequestLog;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * @covers \DigipolisGent\API\Logger\RequestLog
+ */
 class RequestLogTest extends TestCase
 {
-
-    public function testToString()
+    /**
+     * Cast to string contains all request details.
+     *
+     * @test
+     */
+    public function castToStringHasAllDetails(): void
     {
-        $request = $this->getMockBuilder(RequestInterface::class)->getMock();
-        $method = uniqid();
-        $headers = uniqid();
-        $uri = uniqid();
-        $body = uniqid();
-        // Log should contain method, headers, uri and body.
-        $request->expects($this->any())->method('getMethod')->willReturn($method);
-        $request->expects($this->any())->method('getHeaders')->willReturn($headers);
-        $request->expects($this->any())->method('getUri')->willReturn($uri);
-        $request->expects($this->any())->method('getBody')->willReturn($body);
-        $log = (string)(new RequestLog($request));
-        $this->assertContains($method, $log);
-        $this->assertContains($headers, $log);
-        $this->assertContains($uri, $log);
-        $this->assertContains($body, $log);
+        $request = $this->prophesize(RequestInterface::class);
+        $request->getMethod()->willReturn('GET');
+        $request->getHeaders()->willReturn(['test' => 'foo']);
+        $request->getUri()->willReturn('/uriTest');
+        $request->getBody()->willReturn('bodyTest');
+
+        $logItem = new RequestLog($request->reveal());
+
+        $expected = <<<EOT
+Request 
+ Method GET 
+ Headers {"test":"foo"} 
+ URI /uriTest 
+ Body "bodyTest" 
+ 
+
+EOT;
+        $this->assertEquals($expected, (string) $logItem);
     }
 }

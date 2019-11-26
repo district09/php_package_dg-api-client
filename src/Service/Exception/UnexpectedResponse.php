@@ -1,18 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Service\Exception;
 
+/**
+ * Exception when the response object was not of the correct type.
+ */
 class UnexpectedResponse extends ServiceException
 {
     /**
      * Generates exception with certain message
      *
      * @param string $actual
+     *   The actual class name.
      * @param string $expected
-     * @return static
+     *   The expected class name.
+     *
+     * @return \DigipolisGent\API\Service\Exception\UnexpectedResponse
      */
-    public static function fromClass($actual, $expected)
+    public static function fromClass($actual, $expected): UnexpectedResponse
     {
-        return new static(sprintf('Got instance of %s expected %s response', $actual, $expected));
+        $message = sprintf(
+            'Got instance of %s expected %s response',
+            $actual,
+            $expected
+        );
+
+        return new static($message, 500);
     }
 }

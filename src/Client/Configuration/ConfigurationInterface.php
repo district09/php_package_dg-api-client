@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Client\Configuration;
 
 /**
- * Interface ConfigurationInterface.
- *
- * @package DigipolisGent\API\Client\Configuration
+ * Configuration used to create the client.
  */
 interface ConfigurationInterface
 {
@@ -14,19 +14,19 @@ interface ConfigurationInterface
      *
      * @return string
      */
-    public function getUri();
+    public function getUri(): string;
 
     /**
      * Get the service version number to use.
      *
      * @return string
      */
-    public function getVersion();
+    public function getVersion(): string;
 
     /**
      * Get the timeout value.
      *
      * @return int
      */
-    public function getTimeout();
+    public function getTimeout(): int;
 }

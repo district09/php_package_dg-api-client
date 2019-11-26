@@ -1,7 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Client\Configuration;
 
+/**
+ * Configuration used to create the client.
+ */
 class Configuration implements ConfigurationInterface
 {
     /**
@@ -11,21 +16,20 @@ class Configuration implements ConfigurationInterface
      */
     protected $endpointUri;
 
-
     /**
      * The configuration options.
      *
      * @var array
      */
-    protected $options = array(
+    protected $options = [
         'version' => 1,
         'timeout' => 20,
-    );
+    ];
 
     /**
      * @inheritDoc
      */
-    public function __construct($endpointUri, array $options = array())
+    public function __construct($endpointUri, array $options = [])
     {
         $this->endpointUri = $endpointUri;
 
@@ -41,7 +45,7 @@ class Configuration implements ConfigurationInterface
     /**
      * @inheritDoc
      */
-    public function getUri()
+    public function getUri(): string
     {
         return $this->endpointUri;
     }
@@ -49,15 +53,15 @@ class Configuration implements ConfigurationInterface
     /**
      * @inheritDoc
      */
-    public function getVersion()
+    public function getVersion(): string
     {
-        return $this->options['version'];
+        return (string) $this->options['version'];
     }
 
     /**
      * @inheritDoc
      */
-    public function getTimeout()
+    public function getTimeout(): int
     {
         return $this->options['timeout'];
     }

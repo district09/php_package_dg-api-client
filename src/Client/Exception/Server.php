@@ -1,13 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Client\Exception;
 
 /**
- * Client Server exception.
- *
- * @package DigipolisGent\API\Client\Exception
+ * Exception related to a server.
  */
-class Server extends \Exception
+class Server extends Exception
 {
 
 }

@@ -1,13 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Client\Exception;
 
 /**
- * Client Transport exception.
- *
- * @package DigipolisGent\API\Client\Exception
+ * Exception related to transport.
  */
-class Transport extends \Exception
+class Transport extends Exception
 {
 
 }
