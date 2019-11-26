@@ -1,26 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Tests\Client\Configuration;
 
 use DigipolisGent\API\Client\Configuration\Configuration;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \DigipolisGent\API\Client\Configuration\Configuration
+ */
 class ConfigurationTest extends TestCase
 {
-
     /**
-     * Test constructor without options.
+     * Configuration can be created without options.
+     *
+     * @test
      */
-    public function testConstructorWithoutOptions()
+    public function configurationCanBeCreatedWithoutOptions(): void
     {
         $uri = 'https://test-endpoint.gent';
         $configuration = new Configuration($uri);
 
         $this->assertEquals($uri, $configuration->getUri(), 'Uri is set.');
 
-        // Default options.
-        $this->assertEquals(
-            1,
+        $this->assertSame(
+            '1',
             $configuration->getVersion(),
             'Default version is "1".'
         );
@@ -32,9 +37,11 @@ class ConfigurationTest extends TestCase
     }
 
     /**
-     * Test constructor with options.
+     * Configuration can be created with options.
+     *
+     * @test
      */
-    public function testConstructorWithOptions()
+    public function constructorWithOptions(): void
     {
         $options = array(
             'version' => 2,
@@ -46,13 +53,12 @@ class ConfigurationTest extends TestCase
             $options
         );
 
-        // Custom options.
-        $this->assertEquals(
-            $options['version'],
+        $this->assertSame(
+            (string) $options['version'],
             $configuration->getVersion(),
             'Version is set to custom value.'
         );
-        $this->assertEquals(
+        $this->assertSame(
             $options['timeout'],
             $configuration->getTimeout(),
             'Timeout is set to custom value.'

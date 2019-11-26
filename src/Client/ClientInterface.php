@@ -18,19 +18,18 @@ interface ClientInterface
     /**
      * Perform a request to the Gent Services backend.
      *
-     * @param RequestInterface $request
-     *   The request parameters.
+     * @param \Psr\Http\Message\RequestInterface $request
+     *   The request to be send.
      *
-     * @return ResponseInterface
+     * @return \DigipolisGent\API\Client\Response\ResponseInterface
      *   The response of the service call.
      */
-    public function send(RequestInterface $request);
+    public function send(RequestInterface $request): ResponseInterface;
 
     /**
      * Adds a Handler to the Client
      *
-     * @param HandlerInterface $handler
-     * @return ClientInterface
+     * @param \DigipolisGent\API\Client\Handler\HandlerInterface $handler
      */
-    public function addHandler(HandlerInterface $handler);
+    public function addHandler(HandlerInterface $handler): void;
 }

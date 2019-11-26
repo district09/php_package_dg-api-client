@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Tests\Client;
 
 use DigipolisGent\API\Client\AbstractClient;
@@ -7,17 +9,20 @@ use DigipolisGent\API\Client\Configuration\Configuration;
 use DigipolisGent\API\Client\Exception\HandlerNotFound;
 use DigipolisGent\API\Client\Handler\HandlerInterface;
 use DigipolisGent\API\Client\Response\ResponseInterface;
-use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Exception\ClientException;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 
+/**
+ * @covers \DigipolisGent\API\Client\AbstractClient
+ */
 class ClientTest extends TestCase
 {
     /**
-     * @var MockObject|GuzzleClient
+     * @var \GuzzleHttp\ClientInterface
      */
     protected $guzzle;
 
@@ -27,32 +32,32 @@ class ClientTest extends TestCase
     protected $endpointUri;
 
     /**
-     * @var Configuration
+     * @var \DigipolisGent\API\Client\Configuration\Configuration
      */
     protected $configuration;
 
     /**
-     * @var AbstractClient
+     * @var \DigipolisGent\API\Client\AbstractClient
      */
     protected $client;
 
     /**
-     * @var MockObject|RequestInterface
+     * @var \Psr\Http\Message\RequestInterface
      */
     protected $request;
 
     /**
-     * @var MockObject|HandlerInterface
+     * @var \DigipolisGent\API\Client\Handler\HandlerInterface
      */
     protected $handler;
 
     /**
-     * @var MockObject|PsrResponseInterface
+     * @var \Psr\Http\Message\ResponseInterface
      */
     protected $psrResponse;
 
     /**
-     * @var MockObject|ResponseInterface
+     * @var \DigipolisGent\API\Client\Response\ResponseInterface
      */
     protected $response;
 
@@ -60,42 +65,79 @@ class ClientTest extends TestCase
     {
         parent::setUp();
 
-        // Create mocks.
         $this->endpointUri = 'https://' . uniqid() . '.com';
-        $this->guzzle = $this->getMockBuilder(GuzzleClient::class)->getMock();
         $this->configuration = new Configuration($this->endpointUri);
-        $this->client = $this->getMockForAbstractClass(AbstractClient::class, [$this->guzzle, $this->configuration]);
-        $this->request = $this->getMockBuilder(RequestInterface::class)->getMock();
-        $this->response = $this->getMockBuilder(ResponseInterface::class)->getMock();
-        $this->psrResponse = $this->getMockBuilder(PsrResponseInterface::class)->getMock();
-        $this->handler = $this->getMockBuilder(HandlerInterface::class)->getMock();
 
-        // Set expectations.
-        $this->guzzle->expects($this->any())->method('send')->willReturn($this->psrResponse);
-        $this->handler->expects($this->any())->method('handles')->willReturn(get_class($this->request));
-        $this->handler->expects($this->any())->method('toResponse')->with($this->psrResponse)->willReturn($this->response);
+        $response = $this->prophesize(ResponseInterface::class);
+        $this->response = $response->reveal();
+
+        $psrResponse = $this->prophesize(PsrResponseInterface::class);
+        $this->psrResponse = $psrResponse->reveal();
+
+        $request = $this->prophesize(RequestInterface::class);
+        $request->getBody()->willReturn('123');
+        $request->withHeader('Content-Length', 3)->willReturn($request->reveal());
+        $this->request = $request->reveal();
+
+        $guzzle = $this->prophesize(GuzzleClientInterface::class);
+        $guzzle->send(Argument::any())->willReturn($this->psrResponse);
+        $this->guzzle = $guzzle->reveal();
+
+        $handler = $this->prophesize(HandlerInterface::class);
+        $handler->handles()->willReturn([get_class($this->request)]);
+        $handler->toResponse($this->psrResponse)->willReturn($this->response);
+        $this->handler = $handler->reveal();
     }
 
-    public function testSendWithoutHandlers()
+    /**
+     * Exception is thrown when client gets request that cannot be handled.
+     *
+     * @test
+     */
+    public function exceptionIsThrownWhenRequestHasNoHandlers(): void
     {
+        $client = $this->getMockForAbstractClass(
+            AbstractClient::class,
+            [$this->guzzle, $this->configuration]
+        );
+
         $this->expectException(HandlerNotFound::class);
-        $this->request->expects($this->any())->method('withHeader')->willReturnSelf();
-        $this->client->send($this->request);
+        $client->send($this->request);
     }
 
-    public function testSendWithHandlers()
+    /**
+     * Client sends request and returns handler response.
+     *
+     * @test
+     */
+    public function handlerProcessesResponse(): void
     {
-        $this->request->expects($this->any())->method('withHeader')->willReturnSelf();
-        $this->client->addHandler($this->handler);
-        $this->assertEquals($this->response, $this->client->send($this->request));
+        $client = $this->getMockForAbstractClass(
+            AbstractClient::class,
+            [$this->guzzle, $this->configuration]
+        );
+        $client->addHandler($this->handler);
+
+        $this->assertEquals($this->response, $client->send($this->request));
     }
 
-    public function testFailedSendWithHandlers()
+    /**
+     * Client exception is captured in response.
+     *
+     * @test
+     */
+    public function guzzleExceptionIsCapturedInResponse(): void
     {
-        $this->request->expects($this->any())->method('withHeader')->willReturnSelf();
-        $this->client->addHandler($this->handler);
         $exception = new ClientException('', $this->request, $this->psrResponse);
-        $this->guzzle->expects($this->any())->method('send')->willThrowException($exception);
-        $this->assertEquals($this->response, $this->client->send($this->request));
+        $guzzle = $this->prophesize(GuzzleClientInterface::class);
+        $guzzle->send(Argument::any())->willThrow($exception);
+
+        $client = $this->getMockForAbstractClass(
+            AbstractClient::class,
+            [$guzzle->reveal(), $this->configuration]
+        );
+        $client->addHandler($this->handler);
+
+        $this->assertEquals($this->response, $client->send($this->request));
     }
 }
