@@ -14,7 +14,7 @@ All Notable changes to `digipolisgent/api-client` package.
 * Renamed the AbstractRequest class to AbstractJsonRequest.
 * The client in ServiceAbstract is now only accessible in extending
   classes trough protected method ServiceAbstract::client().
-  
+
 ### Removed
 
 * Removed chaining ClientInterface::addHandler() method calls.
