@@ -1,31 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Cache;
 
 use Psr\SimpleCache\CacheInterface;
 
 /**
- * Class LoggableTrait.
- *
- * Use this trait to add cache to an object.
- *
- * @package DigipolisGent\API\Cache
+ * Use this trait to add cache support to an object.
  */
 trait CacheableTrait
 {
     /**
      * The cache service.
      *
-     * @var CacheInterface
+     * @var \Psr\SimpleCache\CacheInterface
      */
     protected $cache;
 
     /**
      * Set the cache service.
      *
-     * @param CacheInterface $cache
+     * @param \Psr\SimpleCache\CacheInterface $cache
      */
-    public function setCacheService(CacheInterface $cache)
+    public function setCacheService(CacheInterface $cache): void
     {
         $this->cache = $cache;
     }
@@ -51,7 +49,7 @@ trait CacheableTrait
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *   If the $key string is not a legal value.
      */
-    protected function cacheSet($key, $value, $ttl = null)
+    protected function cacheSet(string $key, $value, $ttl = null): bool
     {
         if (!$this->cache) {
             return false;
@@ -75,7 +73,7 @@ trait CacheableTrait
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *   If the $key string is not a legal value.
      */
-    protected function cacheDelete($key)
+    protected function cacheDelete(string $key): bool
     {
         if (!$this->cache) {
             return false;
@@ -90,7 +88,7 @@ trait CacheableTrait
      * @return bool
      *   Cache is cleared.
      */
-    protected function cacheClear()
+    protected function cacheClear(): bool
     {
         if (!$this->cache) {
             return false;
@@ -116,7 +114,7 @@ trait CacheableTrait
      * @throws \Psr\SimpleCache\InvalidArgumentException
      *   If the $key string is not a legal value.
      */
-    protected function cacheGet($key, $default = null)
+    protected function cacheGet(string $key, $default = null)
     {
         if (!$this->cache) {
             return null;

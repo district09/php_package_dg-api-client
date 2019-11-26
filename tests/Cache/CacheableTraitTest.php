@@ -1,92 +1,141 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Tests\Cache;
 
 use DigipolisGent\API\Cache\CacheableTrait;
 use PHPUnit\Framework\TestCase;
 use Psr\SimpleCache\CacheInterface;
 
+/**
+ * @covers \DigipolisGent\API\Cache\CacheableTrait
+ */
 class CacheableTraitTest extends TestCase
 {
     use CacheableTrait;
 
-    public function testCacheSetWithoutCache()
+    /**
+     * False is returned is cache is set without cache service.
+     *
+     * @test
+     */
+    public function cacheSetWithoutCache(): void
     {
         $key = uniqid();
         $value = uniqid();
+
         $this->assertFalse($this->cacheSet($key, $value));
     }
 
-    public function testCacheDeletetWithoutCache()
+    /**
+     * False is returned if cache is deleted without cache service.
+     *
+     * @test
+     */
+    public function cacheDeletetWithoutCache(): void
     {
         $key = uniqid();
+
         $this->assertFalse($this->cacheDelete($key));
     }
 
-    public function testCacheClearWithoutCache()
+    /**
+     * False is returned when all cache is cleared without cache service.
+     *
+     * @test
+     */
+    public function cacheClearWithoutCache(): void
     {
         $this->assertFalse($this->cacheClear());
     }
 
-    public function testCacheGetWithoutCache()
+    /**
+     * Null is returned when item is retrieved from cache without cache service.
+     *
+     * @test
+     */
+    public function cacheGetWithoutCache(): void
     {
         $key = uniqid();
+
         $this->assertNull($this->cacheGet($key));
     }
 
-    public function testCacheSetWithCache()
+    /**
+     * True is returned when value is stored in cache service.
+     *
+     * @test
+     */
+    public function cacheSetWithCache(): void
     {
-        $cache = $this->getCacheService();
         $key = uniqid();
         $value = uniqid();
-        $cache
-            ->expects($this->once())
-            ->method('set')
-            ->with($key, $value)
-            ->willReturn(true);
-        $this->assertTrue($this->cacheSet($key, $value));
+        $ttl = 7200;
+
+        $cacheService = $this->prophesize(CacheInterface::class);
+        $cacheService
+            ->set($key, $value, $ttl)
+            ->willReturn(true)
+            ->shouldBeCalled();
+        $this->setCacheService($cacheService->reveal());
+
+        $this->assertTrue($this->cacheSet($key, $value, $ttl));
     }
 
-    public function testCacheDeletetWithCache()
+    /**
+     * True is returned when the value is deleted from the cache service.
+     *
+     * @test
+     */
+    public function cacheDeletetWithCache(): void
     {
-        $cache = $this->getCacheService();
         $key = uniqid();
-        $cache
-            ->expects($this->once())
-            ->method('delete')
-            ->with($key)
-            ->willReturn(true);
+
+        $cacheService = $this->prophesize(CacheInterface::class);
+        $cacheService
+            ->delete($key)
+            ->willReturn(true)
+            ->shouldBeCalled();
+        $this->setCacheService($cacheService->reveal());
+
         $this->assertTrue($this->cacheDelete($key));
     }
 
-    public function testCacheClearWithCache()
+    /**
+     * True is returned when all cache is cleared from cache service.
+     *
+     * @test
+     */
+    public function cacheClearWithCache(): void
     {
-         $cache = $this->getCacheService();
-        $cache
-            ->expects($this->once())
-            ->method('clear')
-            ->willReturn(true);
+        $cacheService = $this->prophesize(CacheInterface::class);
+        $cacheService
+            ->clear()
+            ->willReturn(true)
+            ->shouldBeCalled();
+        $this->setCacheService($cacheService->reveal());
+
         $this->assertTrue($this->cacheClear());
     }
 
-    public function testCacheGetWithCache()
+    /**
+     * Value can be retrieved from the cache backend.
+     *
+     * @test
+     */
+    public function cacheGetWithCache()
     {
-        $cache = $this->getCacheService();
         $key = uniqid();
         $value = uniqid();
-        $cache
-            ->expects($this->once())
-            ->method('get')
-            ->with($key)
-            ->willReturn($value);
+
+        $cacheService = $this->prophesize(CacheInterface::class);
+        $cacheService
+            ->get($key, null)
+            ->willReturn($value)
+            ->shouldBeCalled();
+        $this->setCacheService($cacheService->reveal());
+
         $this->assertEquals($value, $this->cacheGet($key));
-    }
-
-    protected function getCacheService()
-    {
-        $cacheService = $this->getMockBuilder(CacheInterface::class)->getMock();
-        $this->setCacheService($cacheService);
-
-        return $cacheService;
     }
 }
