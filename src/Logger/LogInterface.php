@@ -1,18 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Logger;
 
 /**
- * Interface LogInterface.
- *
- * @package DigipolisGent\API\Logger
+ * Log item interface.
  */
 interface LogInterface
 {
     /**
-     * A log should be able to be converted to a string
+     * Cast the log item to a string.
      *
      * @return string
      */
-    public function __toString();
+    public function __toString(): string;
 }

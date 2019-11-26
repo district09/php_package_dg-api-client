@@ -9,9 +9,9 @@ use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Abstract request requesting HTML response.
+ * Abstract request requesting JSON response.
  */
-abstract class AbstractHtmlRequest extends Request implements RequestInterface
+abstract class AbstractJsonRequest extends Request implements RequestInterface
 {
     /**
      * Constructor.
@@ -24,7 +24,7 @@ abstract class AbstractHtmlRequest extends Request implements RequestInterface
         parent::__construct(
             MethodType::GET,
             $uri->getUri(),
-            ['Accept' => AcceptType::HTML]
+            ['Accept' => AcceptType::JSON]
         );
     }
 }

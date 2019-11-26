@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Service;
 
 use DigipolisGent\API\Cache\CacheableInterface;
@@ -9,9 +11,7 @@ use DigipolisGent\API\Logger\LoggableInterface;
 use DigipolisGent\API\Logger\LoggableTrait;
 
 /**
- * Class ServiceAbstract.
- *
- * @package DigipolisGent\API\Service
+ * Abstract service containing the client to access the backend.
  */
 abstract class ServiceAbstract implements ServiceInterface, LoggableInterface, CacheableInterface
 {
@@ -19,17 +19,25 @@ abstract class ServiceAbstract implements ServiceInterface, LoggableInterface, C
     use CacheableTrait;
 
     /**
-     * @var ClientInterface
+     * @var \DigipolisGent\API\Client\ClientInterface
      */
-    protected $client;
+    private $client;
 
     /**
-     * @param ClientInterface $client
-     *
-     * @codeCoverageIgnore
+     * @param \DigipolisGent\API\Client\ClientInterface $client
      */
     public function __construct(ClientInterface $client)
     {
         $this->client = $client;
+    }
+
+    /**
+     * Get the client.
+     *
+     * @return \DigipolisGent\API\Client\ClientInterface
+     */
+    protected function client(): ClientInterface
+    {
+        return $this->client;
     }
 }

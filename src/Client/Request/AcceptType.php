@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Client\Request;
 
 /**
@@ -8,13 +10,6 @@ namespace DigipolisGent\API\Client\Request;
 class AcceptType
 {
     /**
-     * JSON format.
-     *
-     * @var string
-     */
-    const JSON = 'application/json';
-
-    /**
      * HTML format.
      *
      * @var string
@@ -22,9 +17,23 @@ class AcceptType
     const HTML = 'text/html';
 
     /**
+     * JSON format.
+     *
+     * @var string
+     */
+    const JSON = 'application/json';
+
+    /**
      * TEXT format.
      *
      * @var string
      */
     const TEXT = 'text/plain';
+
+    /**
+     * XML format.
+     *
+     * @var string
+     */
+    const XML = 'application/xml';
 }

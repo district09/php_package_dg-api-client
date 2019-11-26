@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Client\Request;
 
 use DigipolisGent\API\Client\Uri\UriInterface;
@@ -7,16 +9,14 @@ use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Abstract request requesting JSON response.
- *
- * @package DigipolisGent\API\Client\Request
+ * Abstract request requesting XML response.
  */
-abstract class AbstractRequest extends Request implements RequestInterface
+abstract class AbstractXmlRequest extends Request implements RequestInterface
 {
     /**
      * Constructor.
      *
-     * @param UriInterface $uri
+     * @param \DigipolisGent\API\Client\Uri\UriInterface $uri
      *   The URI for the request object.
      */
     public function __construct(UriInterface $uri)
@@ -24,7 +24,7 @@ abstract class AbstractRequest extends Request implements RequestInterface
         parent::__construct(
             MethodType::GET,
             $uri->getUri(),
-            ['Accept' => AcceptType::JSON]
+            ['Accept' => AcceptType::XML]
         );
     }
 }

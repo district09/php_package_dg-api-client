@@ -1,29 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Logger;
 
 /**
- * Class LoggableTrait.
- *
  * Use this trait to add loggers to an object.
- *
- * @package DigipolisGent\API\Logger
  */
 trait LoggableTrait
 {
     /**
      * Array of loggers.
      *
-     * @var LoggerInterface[]
+     * @var \DigipolisGent\API\Logger\LoggerInterface[]
      */
-    protected $loggers = array();
+    protected $loggers = [];
 
     /**
      * Add a logger to an object.
      *
-     * @param LoggerInterface $logger
+     * @param \DigipolisGent\API\Logger\LoggerInterface $logger
      */
-    public function addLogger(LoggerInterface $logger)
+    public function addLogger(LoggerInterface $logger): void
     {
         $this->loggers[] = $logger;
     }
@@ -33,7 +31,7 @@ trait LoggableTrait
      *
      * @param LogInterface $log
      */
-    protected function log(LogInterface $log)
+    protected function log(LogInterface $log): void
     {
         foreach ($this->loggers as $logger) {
             $logger->log($log);

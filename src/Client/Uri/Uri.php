@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Client\Uri;
 
 /**
- * Abstract implementation of the URI.
- *
- * @package DigipolisGent\API\Client\Uri
+ * Request URI to be used to communicate with the server endpoint.
  */
 class Uri implements UriInterface
 {
@@ -21,7 +21,7 @@ class Uri implements UriInterface
      *
      * @param string $uri
      */
-    public function __construct($uri)
+    public function __construct(string $uri)
     {
         $this->uri = $uri;
     }
@@ -32,7 +32,7 @@ class Uri implements UriInterface
      * @return string
      *   The URI string.
      */
-    public function getUri()
+    public function getUri(): string
     {
         return $this->uri;
     }

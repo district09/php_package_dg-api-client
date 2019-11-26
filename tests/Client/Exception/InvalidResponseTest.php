@@ -1,25 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Tests\Client\Exception;
 
 use DigipolisGent\API\Client\Exception\InvalidResponse;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * @covers \DigipolisGent\API\Client\Exception\InvalidResponse
+ */
 class InvalidResponseTest extends TestCase
 {
-
-    public function testFromResponse()
+    /**
+     * Exception can be created from response.
+     *
+     * @test
+     */
+    public function exceptionCanBeCreatedFromResponse()
     {
-        $response = $this->getMockBuilder(ResponseInterface::class)->getMock();
         $data = ['value' => uniqid()];
         $jsonData = json_encode($data);
         $statusCode = random_int(200, 500);
-        $response->expects($this->once())->method('getBody')->willReturn($jsonData);
-        $response->expects($this->once())->method('getStatusCode')->willReturn($statusCode);
-        $exception = InvalidResponse::fromResponse($response);
-        $this->assertContains($jsonData, $exception->getMessage());
-        $this->assertContains((string) $statusCode, $exception->getMessage());
+
+        $response = $this->prophesize(ResponseInterface::class);
+        $response->getBody()->willReturn($jsonData);
+        $response->getStatusCode()->willReturn($statusCode);
+
+        $exception = InvalidResponse::fromResponse($response->reveal());
+
+        $this->assertStringContainsString($jsonData, $exception->getMessage());
+        $this->assertStringContainsString((string) $statusCode, $exception->getMessage());
         $this->assertEquals($data, $exception->getData());
     }
 }

@@ -1,73 +1,82 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Client;
 
 use DigipolisGent\API\Client\Configuration\ConfigurationInterface;
 use DigipolisGent\API\Client\Exception\HandlerNotFound;
+use DigipolisGent\API\Client\Handler\HandlerInterface;
+use DigipolisGent\API\Client\Response\ResponseInterface;
 use DigipolisGent\API\Logger\LoggableInterface;
 use DigipolisGent\API\Logger\LoggableTrait;
 use DigipolisGent\API\Logger\RequestLog;
-use DigipolisGent\API\Logger\ResponseLog;
+use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\RequestInterface;
 
 /**
- * Class ClientAbstract.
- *
- * @package DigipolisGent\API\Client
+ * Abstract implementation of the service client.
  */
 abstract class AbstractClient implements ClientInterface, LoggableInterface
 {
     use LoggableTrait;
 
     /**
-     * @var Handler\HandlerInterface[]
+     * Handlers this client has to handle the requests.
+     *
+     * @var \DigipolisGent\API\Client\Handler\HandlerInterface[]
      */
     protected $handlers = [];
 
     /**
-     * @var \GuzzleHttp\Client
+     * Guzzle HTTP client.
+     *
+     * @var \GuzzleHttp\ClientInterface
      */
     protected $guzzle;
 
     /**
-     * @var ConfigurationInterface
+     * The client configuration.
+     *
+     * @var \DigipolisGent\API\Client\Configuration\ConfigurationInterface
      */
     protected $configuration;
 
     /**
      * Client constructor.
      *
-     * @param \GuzzleHttp\Client $guzzle
-     * @param ConfigurationInterface $configuration
+     * @param \GuzzleHttp\ClientInterface $guzzle
+     * @param \DigipolisGent\API\Client\Configuration\ConfigurationInterface $configuration
      */
-    public function __construct(\GuzzleHttp\Client $guzzle, ConfigurationInterface $configuration)
+    public function __construct(GuzzleClientInterface $guzzle, ConfigurationInterface $configuration)
     {
-        $this->guzzle        = $guzzle;
+        $this->guzzle = $guzzle;
         $this->configuration = $configuration;
     }
 
     /**
-     * Sends a Request and returns the appropriate Response
+     * Sends a Request and returns the appropriate Response.
      *
-     * @param RequestInterface $request
-     * @return Response\ResponseInterface
-     * @throws HandlerNotFound
+     * @param \Psr\Http\Message\RequestInterface $request
+     *
+     * @return \DigipolisGent\API\Client\Response\ResponseInterface
+     *
+     * @throws \DigipolisGent\API\Client\Exception\HandlerNotFound
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function send(RequestInterface $request)
+    public function send(RequestInterface $request): ResponseInterface
     {
         $psrRequest  = $this->injectHeaders($request);
 
         $this->log(new RequestLog($request));
 
-        $handler     = $this->getHandler($request);
+        $handler = $this->getHandler($request);
         try {
             $psrResponse = $this->guzzle->send($psrRequest);
         } catch (ClientException $e) {
             $psrResponse = $e->getResponse();
         }
-
-        $this->log(new ResponseLog($psrResponse));
 
         return $handler->toResponse($psrResponse);
     }
@@ -75,24 +84,28 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
     /**
      * Adds headers to a Request object
      *
-     * @param RequestInterface $request
-     * @return RequestInterface
+     * @param \Psr\Http\Message\RequestInterface $request
+     *
+     * @return \Psr\Http\Message\RequestInterface
      */
-    protected function injectHeaders(RequestInterface $request)
+    protected function injectHeaders(RequestInterface $request): RequestInterface
     {
-        return $request
-            ->withHeader('Content-Length', strlen((string)$request->getBody()))
-        ;
+        return $request->withHeader(
+            'Content-Length',
+            (string) strlen((string) $request->getBody())
+        );
     }
 
     /**
      * Returns the correct handler for the given Request-object
      *
-     * @param RequestInterface $request
-     * @return Handler\HandlerInterface
-     * @throws HandlerNotFound
+     * @param \Psr\Http\Message\RequestInterface $request
+     *
+     * @return \DigipolisGent\API\Client\Handler\HandlerInterface
+     *
+     * @throws \DigipolisGent\API\Client\Exception\HandlerNotFound
      */
-    protected function getHandler(RequestInterface $request)
+    protected function getHandler(RequestInterface $request): HandlerInterface
     {
         if (array_key_exists(get_class($request), $this->handlers)) {
             return $this->handlers[get_class($request)];
@@ -102,17 +115,15 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
     }
 
     /**
-     * Registers one handler
+     * Registers a single handler.
      *
-     * @param Handler\HandlerInterface $handler
-     * @return $this
+     * @param \DigipolisGent\API\Client\Handler\HandlerInterface $handler
      */
-    public function addHandler(Handler\HandlerInterface $handler)
+    public function addHandler(HandlerInterface $handler): void
     {
         $requestTypes = (array) $handler->handles();
         foreach ($requestTypes as $requestType) {
             $this->handlers[$requestType] = $handler;
         }
-        return $this;
     }
 }
