@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Logger;
 
 /**
- * Interface LoggableInterface.
- *
- * @package DigipolisGent\API\Logger
+ * Allows loggers to be added to an object.
  */
 interface LoggableInterface
 {
@@ -14,5 +14,5 @@ interface LoggableInterface
      *
      * @param LoggerInterface $logger
      */
-    public function addLogger(LoggerInterface $logger);
+    public function addLogger(LoggerInterface $logger): void;
 }

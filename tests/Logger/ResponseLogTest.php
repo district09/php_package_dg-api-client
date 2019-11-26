@@ -1,27 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\API\Tests\Logger;
 
 use DigipolisGent\API\Logger\ResponseLog;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * @covers \DigipolisGent\API\Logger\ResponseLog
+ */
 class ResponseLogTest extends TestCase
 {
-
-    public function testToString()
+    /**
+     * Cast to string contains all response details.
+     *
+     * @test
+     */
+    public function castToStringHasAllDetails(): void
     {
-        $request = $this->getMockBuilder(ResponseInterface::class)->getMock();
-        $statusCode = uniqid();
-        $headers = uniqid();
-        $body = uniqid();
-        // Log should contain status code, headers and body.
-        $request->expects($this->any())->method('getStatusCode')->willReturn($statusCode);
-        $request->expects($this->any())->method('getHeaders')->willReturn($headers);
-        $request->expects($this->any())->method('getBody')->willReturn($body);
-        $log = (string)(new ResponseLog($request));
-        $this->assertContains($statusCode, $log);
-        $this->assertContains($headers, $log);
-        $this->assertContains($body, $log);
+        $response = $this->prophesize(ResponseInterface::class);
+        $response->getStatusCode()->willReturn(400);
+        $response->getHeaders()->willReturn(['test' => 'foo']);
+        $response->getBody()->willReturn('bodyTest');
+
+        $logItem = new ResponseLog($response->reveal());
+
+        $expected = <<<EOT
+Response 
+ Status 400 
+ Headers {"test":"foo"} 
+ Body "bodyTest" 
+ 
+
+EOT;
+        $this->assertEquals($expected, (string) $logItem);
     }
 }
