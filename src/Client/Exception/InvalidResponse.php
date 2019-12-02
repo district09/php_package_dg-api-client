@@ -7,25 +7,25 @@ namespace DigipolisGent\API\Client\Exception;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Exception thrown when the response has invalid data.
+ * Exception thrown when the response is invalid.
  */
 class InvalidResponse extends Exception
 {
     /**
-     * @var array
+     * @var string
      */
-    protected $data = [];
+    protected $body;
 
     /**
      * InvalidResponse constructor.
      *
      * @param string $message
-     * @param array $data
+     * @param string $body
      * @param int $code
      */
-    public function __construct(string $message, array $data = [], $code = 0)
+    public function __construct(string $message, $body = '', $code = 0)
     {
-        $this->data = $data;
+        $this->body = $body;
         parent::__construct($message, $code);
     }
 
@@ -39,27 +39,25 @@ class InvalidResponse extends Exception
     public static function fromResponse(ResponseInterface $response): InvalidResponse
     {
         $body = (string) $response->getBody();
-        $data = json_decode($body, true);
         $statusCode = $response->getStatusCode();
-
         return new static(
             sprintf(
                 'Response with status code %s was unexpected : "%s".',
                 $statusCode,
                 $body
             ),
-            $data,
+            $body,
             $statusCode
         );
     }
 
     /**
-     * Get the data that was stored into the exception.
+     * Get the response body.
      *
-     * @return array
+     * @return string
      */
-    public function getData(): array
+    public function getBody(): string
     {
-        return $this->data;
+        return $this->body;
     }
 }
