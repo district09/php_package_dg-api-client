@@ -2,6 +2,12 @@
 
 All Notable changes to `digipolisgent/api-client` package.
 
+## [Unreleased]
+
+### Added
+
+* Backported the client() method for services.
+
 ## [1.2.0]
 
 ### Added

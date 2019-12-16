@@ -19,7 +19,7 @@ abstract class ServiceAbstract implements ServiceInterface, LoggableInterface, C
     use CacheableTrait;
 
     /**
-     * @var ClientInterface
+     * @var \DigipolisGent\API\Client\ClientInterface
      */
     protected $client;
 
@@ -31,5 +31,15 @@ abstract class ServiceAbstract implements ServiceInterface, LoggableInterface, C
     public function __construct(ClientInterface $client)
     {
         $this->client = $client;
+    }
+
+    /**
+     * Get the client.
+     *
+     * @return \DigipolisGent\API\Client\ClientInterface
+     */
+    protected function client()
+    {
+        return $this->client;
     }
 }
