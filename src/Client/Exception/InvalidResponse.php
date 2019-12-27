@@ -20,9 +20,9 @@ class InvalidResponse extends Exception
      * InvalidResponse constructor.
      *
      * @param string $message
-     * @param array $data
+     * @param array|null $data
      */
-    public function __construct($message, array $data = [], $code = 0)
+    public function __construct($message, $data = [], $code = 0)
     {
         $this->data = $data;
         parent::__construct($message, $code);
