@@ -25,9 +25,16 @@ interface ClientInterface
     public function send(RequestInterface $request): ResponseInterface;
 
     /**
-     * Adds a Handler to the Client
+     * Adds a Handler to the Client.
      *
      * @param \DigipolisGent\API\Client\Handler\HandlerInterface $handler
      */
     public function addHandler(HandlerInterface $handler): void;
+
+    /**
+     * Get handlers.
+     *
+     * @return Handler\HandlerInterface[]
+     */
+    public function getHandlers();
 }
