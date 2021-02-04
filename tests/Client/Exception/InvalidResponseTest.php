@@ -6,6 +6,7 @@ namespace DigipolisGent\API\Tests\Client\Exception;
 
 use DigipolisGent\API\Client\Exception\InvalidResponse;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -13,6 +14,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 class InvalidResponseTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * Exception can be created from response.
      *
@@ -20,18 +23,17 @@ class InvalidResponseTest extends TestCase
      */
     public function exceptionCanBeCreatedFromResponse()
     {
-        $data = ['value' => uniqid()];
-        $jsonData = json_encode($data);
+        $data = json_encode(['value' => uniqid()]);
         $statusCode = random_int(200, 500);
 
         $response = $this->prophesize(ResponseInterface::class);
-        $response->getBody()->willReturn($jsonData);
+        $response->getBody()->willReturn($data);
         $response->getStatusCode()->willReturn($statusCode);
 
         $exception = InvalidResponse::fromResponse($response->reveal());
 
-        $this->assertStringContainsString($jsonData, $exception->getMessage());
+        $this->assertStringContainsString($data, $exception->getMessage());
         $this->assertStringContainsString((string) $statusCode, $exception->getMessage());
-        $this->assertEquals($data, $exception->getData());
+        $this->assertEquals($data, $exception->getBody());
     }
 }

@@ -34,7 +34,7 @@ class RequestLog implements LogInterface
     public function __toString(): string
     {
         return (string) sprintf(
-            "Request \n Method %s \n Headers %s \n URI %s \n Body %s \n \n",
+            "Request\n Method %s\n Headers %s\n URI %s\n Body %s\n\n",
             $this->request->getMethod(),
             (string) json_encode($this->request->getHeaders()),
             (string) $this->request->getUri(),

@@ -126,4 +126,14 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
             $this->handlers[$requestType] = $handler;
         }
     }
+
+    /**
+     * Get handlers.
+     *
+     * @return Handler\HandlerInterface[]
+     */
+    public function getHandlers()
+    {
+        return $this->handlers;
+    }
 }

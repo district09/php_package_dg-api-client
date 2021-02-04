@@ -7,7 +7,7 @@ namespace DigipolisGent\API\Service\Exception;
 /**
  * Exception when the response object was not of the correct type.
  */
-class UnexpectedResponse extends ServiceException
+final class UnexpectedResponse extends ServiceException
 {
     /**
      * Generates exception with certain message
@@ -27,6 +27,6 @@ class UnexpectedResponse extends ServiceException
             $expected
         );
 
-        return new static($message, 500);
+        return new self($message, 500);
     }
 }

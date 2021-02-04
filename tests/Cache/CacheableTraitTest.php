@@ -6,6 +6,7 @@ namespace DigipolisGent\API\Tests\Cache;
 
 use DigipolisGent\API\Cache\CacheableTrait;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\SimpleCache\CacheInterface;
 
 /**
@@ -13,6 +14,7 @@ use Psr\SimpleCache\CacheInterface;
  */
 class CacheableTraitTest extends TestCase
 {
+    use ProphecyTrait;
     use CacheableTrait;
 
     /**

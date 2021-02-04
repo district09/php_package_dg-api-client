@@ -6,6 +6,7 @@ namespace DigipolisGent\API\Tests\Client\Exception;
 
 use DigipolisGent\API\Client\Exception\HandlerNotFound;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -13,6 +14,8 @@ use Psr\Http\Message\RequestInterface;
  */
 class HandlerNotFoundTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * Exception can be created from a given request.
      *
