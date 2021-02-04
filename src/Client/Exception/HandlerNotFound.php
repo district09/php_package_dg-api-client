@@ -9,7 +9,7 @@ use Psr\Http\Message\RequestInterface;
 /**
  * Exception thrown when no handler is found for the given request.
  */
-class HandlerNotFound extends Handler
+final class HandlerNotFound extends Handler
 {
     /**
      * @param RequestInterface $request

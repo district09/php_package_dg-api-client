@@ -46,6 +46,7 @@ trait CacheableTrait
      * @return bool
      *   Item is cached.
      *
+     * @phpstan-ignore-next-line
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     protected function cacheSet(string $key, $value, $ttl = null): bool
@@ -69,6 +70,7 @@ trait CacheableTrait
      * @return bool
      *   Item is deleted.
      *
+     * @phpstan-ignore-next-line
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     protected function cacheDelete(string $key): bool
@@ -109,6 +111,7 @@ trait CacheableTrait
      * @return mixed
      *   Cached value or default if no cache for the item.
      *
+     * @phpstan-ignore-next-line
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     protected function cacheGet(string $key, $default = null)

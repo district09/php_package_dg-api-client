@@ -6,12 +6,15 @@ namespace Gent\Tests\API\Service;
 
 use DigipolisGent\API\Client\ClientInterface;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
  * @covers \DigipolisGent\API\Service\ServiceAbstract
  */
 class ServiceAbstractTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * Service can be created with client.
      *

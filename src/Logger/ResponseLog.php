@@ -34,7 +34,7 @@ class ResponseLog implements LogInterface
     public function __toString(): string
     {
         return (string)sprintf(
-            "Response \n Status %s \n Headers %s \n Body %s \n \n",
+            "Response\n Status %s\n Headers %s\n Body %s\n\n",
             $this->response->getStatusCode(),
             (string) json_encode($this->response->getHeaders()),
             (string) json_encode($this->response->getBody())

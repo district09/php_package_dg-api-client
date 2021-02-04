@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Exception thrown when the response is invalid.
  */
-class InvalidResponse extends Exception
+final class InvalidResponse extends Exception
 {
     /**
      * @var string
@@ -40,7 +40,7 @@ class InvalidResponse extends Exception
     {
         $body = (string) $response->getBody();
         $statusCode = $response->getStatusCode();
-        return new static(
+        return new self(
             sprintf(
                 'Response with status code %s was unexpected : "%s".',
                 $statusCode,
