@@ -13,6 +13,7 @@ use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 
@@ -21,6 +22,8 @@ use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
  */
 class ClientTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var \GuzzleHttp\ClientInterface
      */

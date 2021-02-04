@@ -2,6 +2,13 @@
 
 All Notable changes to `digipolisgent/api-client` package.
 
+## [Unreleased]
+
+### Added
+
+* Add `district09/qa-php` to instal QA tools.
+* Add also support for Guzzle 7.x.
+
 ## [2.0.0]
 
 ### Added

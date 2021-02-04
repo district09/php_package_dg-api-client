@@ -6,6 +6,7 @@ namespace DigipolisGent\API\Tests\Client\Exception;
 
 use DigipolisGent\API\Client\Exception\InvalidResponse;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -13,6 +14,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 class InvalidResponseTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * Exception can be created from response.
      *

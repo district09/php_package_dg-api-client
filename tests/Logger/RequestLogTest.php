@@ -6,6 +6,7 @@ namespace DigipolisGent\API\Tests\Logger;
 
 use DigipolisGent\API\Logger\RequestLog;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\RequestInterface;
 
 /**
@@ -13,6 +14,8 @@ use Psr\Http\Message\RequestInterface;
  */
 class RequestLogTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * Cast to string contains all request details.
      *
@@ -29,12 +32,12 @@ class RequestLogTest extends TestCase
         $logItem = new RequestLog($request->reveal());
 
         $expected = <<<EOT
-Request 
- Method GET 
- Headers {"test":"foo"} 
- URI /uriTest 
- Body "bodyTest" 
- 
+Request
+ Method GET
+ Headers {"test":"foo"}
+ URI /uriTest
+ Body "bodyTest"
+
 
 EOT;
         $this->assertEquals($expected, (string) $logItem);
