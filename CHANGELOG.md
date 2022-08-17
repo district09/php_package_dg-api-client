@@ -2,7 +2,7 @@
 
 All Notable changes to `digipolisgent/api-client` package.
 
-## [Unreleased]
+## [3.0.0]
 
 ### Added
 
@@ -76,6 +76,7 @@ This includes:
 * Interfaces to create services in client packages.
 
 [Unreleased]: https://github.com/digipolisgent/php_package_dg-api-client/compare/master...develop
+[3.0.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/2.1.0...3.0.0
 [2.1.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/1.2.0...2.0.0
 [1.2.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/1.1.0...1.2.0
