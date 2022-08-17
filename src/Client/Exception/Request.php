@@ -9,5 +9,4 @@ namespace DigipolisGent\API\Client\Exception;
  */
 class Request extends Exception
 {
-
 }

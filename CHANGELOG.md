@@ -2,6 +2,21 @@
 
 All Notable changes to `digipolisgent/api-client` package.
 
+## [Unreleased]
+
+### Added
+
+* Add PHP8.1 support.
+
+### Changed
+
+* Bumped minimum PHP version to 7.4.
+* Bumped minimal Guzzle version to 7.x.
+
+### Updated
+
+* Update qa-php package to 1.x.
+
 ## [2.1.0]
 
 ### Added

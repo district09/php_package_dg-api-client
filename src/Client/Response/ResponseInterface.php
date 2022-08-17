@@ -9,5 +9,4 @@ namespace DigipolisGent\API\Client\Response;
  */
 interface ResponseInterface
 {
-
 }

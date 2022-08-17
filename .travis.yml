@@ -2,9 +2,9 @@ sudo: false
 language: php
 
 php:
-    - 7.3
     - 7.4
     - 8.0
+    - 8.1
 
 before_install:
     # Update & configure composer.
@@ -19,7 +19,7 @@ before_install:
     - ./cc-test-reporter before-build
 
 install:
-    - composer install -n --dev --no-progress
+    - composer install -n --no-progress
 
 script:
     - vendor/bin/grumphp run
