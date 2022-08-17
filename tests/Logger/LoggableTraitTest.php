@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DigipolisGent\API\Tests\Logger;
+namespace DigipolisGent\Tests\API\Logger;
 
 use DigipolisGent\API\Logger\LoggableTrait;
 use DigipolisGent\API\Logger\LoggerInterface;
@@ -27,6 +27,7 @@ class LoggableTraitTest extends TestCase
     {
         $logItem = $this->prophesize(LogInterface::class)->reveal();
         $logger = $this->prophesize(LoggerInterface::class);
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
         $logger->log($logItem)->shouldBeCalled();
 
         $this->addLogger($logger->reveal());

@@ -17,7 +17,7 @@ interface ClientInterface
      * Perform a request to the Gent Services backend.
      *
      * @param \Psr\Http\Message\RequestInterface $request
-     *   The request to be send.
+     *   The request to be sent.
      *
      * @return \DigipolisGent\API\Client\Response\ResponseInterface
      *   The response of the service call.
@@ -36,5 +36,5 @@ interface ClientInterface
      *
      * @return Handler\HandlerInterface[]
      */
-    public function getHandlers();
+    public function getHandlers(): array;
 }

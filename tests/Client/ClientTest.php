@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
-namespace DigipolisGent\API\Tests\Client;
+namespace DigipolisGent\Tests\API\Client;
 
 use DigipolisGent\API\Client\AbstractClient;
 use DigipolisGent\API\Client\Configuration\Configuration;
+use DigipolisGent\API\Client\Configuration\ConfigurationInterface;
 use DigipolisGent\API\Client\Exception\HandlerNotFound;
 use DigipolisGent\API\Client\Handler\HandlerInterface;
 use DigipolisGent\API\Client\Response\ResponseInterface;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use PHPUnit\Framework\TestCase;
@@ -27,43 +29,46 @@ class ClientTest extends TestCase
     /**
      * @var \GuzzleHttp\ClientInterface
      */
-    protected $guzzle;
+    protected ClientInterface $guzzle;
 
     /**
      * @var string
      */
-    protected $endpointUri;
+    protected string $endpointUri;
 
     /**
-     * @var \DigipolisGent\API\Client\Configuration\Configuration
+     * @var \DigipolisGent\API\Client\Configuration\ConfigurationInterface
      */
-    protected $configuration;
+    protected ConfigurationInterface $configuration;
 
     /**
      * @var \Psr\Http\Message\RequestInterface
      */
-    protected $request;
+    protected RequestInterface $request;
 
     /**
      * @var \DigipolisGent\API\Client\Handler\HandlerInterface
      */
-    protected $handler;
+    protected HandlerInterface $handler;
 
     /**
      * @var \Psr\Http\Message\ResponseInterface
      */
-    protected $psrResponse;
+    protected PsrResponseInterface $psrResponse;
 
     /**
      * @var \DigipolisGent\API\Client\Response\ResponseInterface
      */
     protected $response;
 
+    /**
+     * @inheritDoc
+     */
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->endpointUri = 'https://' . uniqid() . '.com';
+        $this->endpointUri = 'https://' . uniqid('', true) . '.com';
         $this->configuration = new Configuration($this->endpointUri);
 
         $response = $this->prophesize(ResponseInterface::class);
@@ -137,5 +142,24 @@ class ClientTest extends TestCase
         $client->addHandler($this->handler);
 
         $this->assertEquals($this->response, $client->send($this->request));
+    }
+
+    /**
+     * Handlers can be retrieved from the client.
+     *
+     * @test
+     */
+    public function itReturnsAllAddedHandlers(): void
+    {
+        $client = $this->getMockForAbstractClass(
+            AbstractClient::class,
+            [$this->guzzle, $this->configuration]
+        );
+        $client->addHandler($this->handler);
+
+        self::assertEquals(
+            [$this->handler],
+            array_values($client->getHandlers())
+        );
     }
 }

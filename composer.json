@@ -1,17 +1,14 @@
 {
     "name": "digipolisgent/api-client",
-    "homepage": "https://github.com/digipolisgent/php_package_api-client",
     "description": "This package provides interfaces and abstract implementations to create an API client.",
+    "license": "MIT",
+    "type": "library",
     "keywords": [
         "api",
         "client",
         "digipolisgent",
         "district09"
     ],
-    "type": "library",
-    "license": "MIT",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "authors": [
         {
             "name": "Peter Decuyper",
@@ -22,13 +19,19 @@
             "email": "sebreghts.jelle@district09.gent"
         }
     ],
+    "homepage": "https://github.com/digipolisgent/php_package_api-client",
     "require": {
-        "php": ">=7.3",
+        "php": "^7.4 || ^8.0",
         "ext-json": "*",
+        "guzzlehttp/guzzle": "^7.0",
         "psr/http-message": "^1.0",
-        "guzzlehttp/guzzle": "^6.0 || ^7.0",
         "psr/simple-cache": "^1.0"
     },
+    "require-dev": {
+        "district09/qa-php": "^1.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "DigipolisGent\\API\\": "src/"
@@ -36,25 +39,28 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Gent\\Tests\\API\\": "tests/"
+            "DigipolisGent\\Tests\\API\\": "tests/"
         }
     },
-    "scripts": {
-        "coverage": "vendor/bin/phpunit --configuration=phpunit.qa-php.xml --coverage-html build/coverage",
-        "grumphp": "vendor/bin/grumphp run",
-        "phpcpd": "vendor/bin/grumphp run --tasks=phpcpd",
-        "phpcs": "vendor/bin/grumphp run --tasks=phpcs",
-        "phpmd": "vendor/bin/grumphp run --tasks=phpmd",
-        "phpstan": "vendor/bin/grumphp run --tasks=phpstan",
-        "phpunit": "vendor/bin/phpunit --configuration=phpunit.qa-php.xml",
-        "post-install-cmd": "vendor/bin/grumphp git:init"
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "phpro/grumphp-shim": true
+        }
     },
     "extra": {
         "grumphp": {
             "config-default-path": "vendor/district09/qa-php/configs/grumphp.yml"
         }
     },
-    "require-dev": {
-        "district09/qa-php": "1.x-dev"
+    "scripts": {
+        "post-install-cmd": "vendor/bin/grumphp git:init",
+        "coverage": "vendor/bin/phpunit --configuration=phpunit.qa-php.xml --coverage-html build/coverage",
+        "grumphp": "vendor/bin/grumphp run",
+        "phpcpd": "vendor/bin/grumphp run --tasks=phpcpd",
+        "phpcs": "vendor/bin/grumphp run --tasks=phpcs",
+        "phpmd": "vendor/bin/grumphp run --tasks=phpmd",
+        "phpstan": "vendor/bin/grumphp run --tasks=phpstan",
+        "phpunit": "vendor/bin/phpunit --configuration=phpunit.qa-php.xml"
     }
 }

@@ -21,7 +21,7 @@ abstract class ServiceAbstract implements ServiceInterface, LoggableInterface, C
     /**
      * @var \DigipolisGent\API\Client\ClientInterface
      */
-    private $client;
+    private ClientInterface $client;
 
     /**
      * @param \DigipolisGent\API\Client\ClientInterface $client

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DigipolisGent\API\Tests\Cache;
+namespace DigipolisGent\Tests\API\Cache;
 
 use DigipolisGent\API\Cache\CacheableTrait;
 use PHPUnit\Framework\TestCase;
@@ -24,8 +24,8 @@ class CacheableTraitTest extends TestCase
      */
     public function cacheSetWithoutCache(): void
     {
-        $key = uniqid();
-        $value = uniqid();
+        $key = uniqid('', true);
+        $value = uniqid('', true);
 
         $this->assertFalse($this->cacheSet($key, $value));
     }
@@ -37,7 +37,7 @@ class CacheableTraitTest extends TestCase
      */
     public function cacheDeletedWithoutCache(): void
     {
-        $key = uniqid();
+        $key = uniqid('', true);
 
         $this->assertFalse($this->cacheDelete($key));
     }
@@ -59,7 +59,7 @@ class CacheableTraitTest extends TestCase
      */
     public function cacheGetWithoutCache(): void
     {
-        $key = uniqid();
+        $key = uniqid('', true);
 
         $this->assertNull($this->cacheGet($key));
     }
@@ -71,8 +71,8 @@ class CacheableTraitTest extends TestCase
      */
     public function cacheSetWithCache(): void
     {
-        $key = uniqid();
-        $value = uniqid();
+        $key = uniqid('', true);
+        $value = uniqid('', true);
         $ttl = 7200;
 
         $cacheService = $this->prophesize(CacheInterface::class);
@@ -92,7 +92,7 @@ class CacheableTraitTest extends TestCase
      */
     public function cacheDeletedWithCache(): void
     {
-        $key = uniqid();
+        $key = uniqid('', true);
 
         $cacheService = $this->prophesize(CacheInterface::class);
         $cacheService
@@ -126,10 +126,10 @@ class CacheableTraitTest extends TestCase
      *
      * @test
      */
-    public function cacheGetWithCache()
+    public function cacheGetWithCache(): void
     {
-        $key = uniqid();
-        $value = uniqid();
+        $key = uniqid('', true);
+        $value = uniqid('', true);
 
         $cacheService = $this->prophesize(CacheInterface::class);
         $cacheService

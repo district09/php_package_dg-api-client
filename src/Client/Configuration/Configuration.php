@@ -14,22 +14,22 @@ class Configuration implements ConfigurationInterface
      *
      * @var string
      */
-    protected $endpointUri;
+    protected string $endpointUri;
 
     /**
      * The configuration options.
      *
      * @var array
      */
-    protected $options = [
+    protected array $options = [
         'version' => 1,
         'timeout' => 20,
     ];
 
     /**
-     * @inheritDoc
+     * Create new configuration.
      */
-    public function __construct($endpointUri, array $options = [])
+    public function __construct(string $endpointUri, array $options = [])
     {
         $this->endpointUri = $endpointUri;
 

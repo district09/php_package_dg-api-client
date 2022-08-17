@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DigipolisGent\API\Tests\Client\Exception;
+namespace DigipolisGent\Tests\API\Client\Exception;
 
 use DigipolisGent\API\Client\Exception\HandlerNotFound;
 use PHPUnit\Framework\TestCase;

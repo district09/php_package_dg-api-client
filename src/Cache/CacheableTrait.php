@@ -14,9 +14,9 @@ trait CacheableTrait
     /**
      * The cache service.
      *
-     * @var \Psr\SimpleCache\CacheInterface
+     * @var \Psr\SimpleCache\CacheInterface|null
      */
-    protected $cache;
+    protected ?CacheInterface $cache = null;
 
     /**
      * Set the cache service.
@@ -51,11 +51,7 @@ trait CacheableTrait
      */
     protected function cacheSet(string $key, $value, $ttl = null): bool
     {
-        if ($this->cache === null) {
-            return false;
-        }
-
-        return $this->cache->set($key, $value, $ttl);
+        return $this->hasCache() && $this->cache->set($key, $value, $ttl);
     }
 
     /**
@@ -75,11 +71,7 @@ trait CacheableTrait
      */
     protected function cacheDelete(string $key): bool
     {
-        if ($this->cache === null) {
-            return false;
-        }
-
-        return $this->cache->delete($key);
+        return $this->hasCache() && $this->cache->delete($key);
     }
 
     /**
@@ -90,11 +82,7 @@ trait CacheableTrait
      */
     protected function cacheClear(): bool
     {
-        if ($this->cache === null) {
-            return false;
-        }
-
-        return $this->cache->clear();
+        return $this->hasCache() && $this->cache->clear();
     }
 
     /**
@@ -116,10 +104,19 @@ trait CacheableTrait
      */
     protected function cacheGet(string $key, $default = null)
     {
-        if ($this->cache === null) {
-            return null;
-        }
+        return $this->hasCache()
+            ? $this->cache->get($key, $default)
+            : null;
+    }
 
-        return $this->cache->get($key, $default);
+    /**
+     * Is there a cache backend.
+     *
+     * @return bool
+     *   Has cache backend.
+     */
+    protected function hasCache(): bool
+    {
+        return $this->cache !== null;
     }
 }

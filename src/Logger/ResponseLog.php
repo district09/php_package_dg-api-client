@@ -16,7 +16,7 @@ class ResponseLog implements LogInterface
      *
      * @var \Psr\Http\Message\ResponseInterface
      */
-    protected $response;
+    protected ResponseInterface $response;
 
     /**
      * Create the log item from given response.
@@ -33,11 +33,11 @@ class ResponseLog implements LogInterface
      */
     public function __toString(): string
     {
-        return (string)sprintf(
+        return sprintf(
             "Response\n Status %s\n Headers %s\n Body %s\n\n",
             $this->response->getStatusCode(),
-            (string) json_encode($this->response->getHeaders()),
-            (string) json_encode($this->response->getBody())
+            json_encode($this->response->getHeaders(), JSON_THROW_ON_ERROR),
+            json_encode($this->response->getBody(), JSON_THROW_ON_ERROR)
         );
     }
 }

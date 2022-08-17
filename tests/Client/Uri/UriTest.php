@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gent\Tests\API\Client\Uri;
+namespace DigipolisGent\Tests\API\Client\Uri;
 
 use DigipolisGent\API\Client\Uri\Uri;
 use PHPUnit\Framework\TestCase;

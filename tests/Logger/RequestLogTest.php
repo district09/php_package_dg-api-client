@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DigipolisGent\API\Tests\Logger;
+namespace DigipolisGent\Tests\API\Logger;
 
 use DigipolisGent\API\Logger\RequestLog;
 use PHPUnit\Framework\TestCase;
