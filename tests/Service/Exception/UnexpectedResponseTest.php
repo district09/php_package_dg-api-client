@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DigipolisGent\API\Tests\Service\Exception;
+namespace DigipolisGent\Tests\API\Service\Exception;
 
 use DigipolisGent\API\Service\Exception\UnexpectedResponse;
 use PHPUnit\Framework\TestCase;

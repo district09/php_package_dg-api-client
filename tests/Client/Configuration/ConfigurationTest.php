@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DigipolisGent\API\Tests\Client\Configuration;
+namespace DigipolisGent\Tests\API\Client\Configuration;
 
 use DigipolisGent\API\Client\Configuration\Configuration;
 use PHPUnit\Framework\TestCase;

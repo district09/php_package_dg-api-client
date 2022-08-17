@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gent\Tests\API\Client\Request;
+namespace DigipolisGent\Tests\API\Client\Request;
 
 use DigipolisGent\API\Client\Request\AbstractJsonRequest;
 use DigipolisGent\API\Client\Request\AcceptType;

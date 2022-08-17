@@ -16,7 +16,7 @@ class RequestLog implements LogInterface
      *
      * @var \Psr\Http\Message\RequestInterface
      */
-    protected $request;
+    protected RequestInterface $request;
 
     /**
      * Create new log item from given request.
@@ -33,12 +33,12 @@ class RequestLog implements LogInterface
      */
     public function __toString(): string
     {
-        return (string) sprintf(
+        return sprintf(
             "Request\n Method %s\n Headers %s\n URI %s\n Body %s\n\n",
             $this->request->getMethod(),
-            (string) json_encode($this->request->getHeaders()),
-            (string) $this->request->getUri(),
-            (string) json_encode($this->request->getBody())
+            json_encode($this->request->getHeaders(), JSON_THROW_ON_ERROR),
+            $this->request->getUri(),
+            json_encode($this->request->getBody(), JSON_THROW_ON_ERROR)
         );
     }
 }

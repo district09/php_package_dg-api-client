@@ -27,21 +27,21 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
      *
      * @var \DigipolisGent\API\Client\Handler\HandlerInterface[]
      */
-    protected $handlers = [];
+    protected array $handlers = [];
 
     /**
      * Guzzle HTTP client.
      *
      * @var \GuzzleHttp\ClientInterface
      */
-    protected $guzzle;
+    protected GuzzleClientInterface $guzzle;
 
     /**
      * The client configuration.
      *
      * @var \DigipolisGent\API\Client\Configuration\ConfigurationInterface
      */
-    protected $configuration;
+    protected ConfigurationInterface $configuration;
 
     /**
      * Client constructor.
@@ -121,7 +121,7 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
      */
     public function addHandler(HandlerInterface $handler): void
     {
-        $requestTypes = (array) $handler->handles();
+        $requestTypes = $handler->handles();
         foreach ($requestTypes as $requestType) {
             $this->handlers[$requestType] = $handler;
         }
@@ -132,7 +132,7 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
      *
      * @return Handler\HandlerInterface[]
      */
-    public function getHandlers()
+    public function getHandlers(): array
     {
         return $this->handlers;
     }

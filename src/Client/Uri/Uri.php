@@ -7,17 +7,17 @@ namespace DigipolisGent\API\Client\Uri;
 /**
  * Request URI to be used to communicate with the server endpoint.
  */
-class Uri implements UriInterface
+final class Uri implements UriInterface
 {
     /**
      * The URI string.
      *
      * @var string
      */
-    private $uri;
+    private string $uri;
 
     /**
-     * Construct the URI object from an URI string.
+     * Construct the URI object from a URI string.
      *
      * @param string $uri
      */
@@ -30,7 +30,7 @@ class Uri implements UriInterface
      * Get the URI as string.
      *
      * @return string
-     *   The URI string.
+     *   The URI.
      */
     public function getUri(): string
     {

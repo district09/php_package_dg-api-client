@@ -13,7 +13,7 @@ interface UriInterface
      * Get the URI as string.
      *
      * @return string
-     *   The URI string.
+     *   The URI.
      */
     public function getUri(): string;
 }

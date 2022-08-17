@@ -19,7 +19,7 @@ final class UnexpectedResponse extends ServiceException
      *
      * @return \DigipolisGent\API\Service\Exception\UnexpectedResponse
      */
-    public static function fromClass($actual, $expected): UnexpectedResponse
+    public static function fromClass(string $actual, string $expected): UnexpectedResponse
     {
         $message = sprintf(
             'Got instance of %s expected %s response',

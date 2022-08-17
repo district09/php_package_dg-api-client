@@ -7,33 +7,33 @@ namespace DigipolisGent\API\Client\Request;
 /**
  * The different Accept types.
  */
-class AcceptType
+final class AcceptType
 {
     /**
      * HTML format.
      *
      * @var string
      */
-    const HTML = 'text/html';
+    public const HTML = 'text/html';
 
     /**
      * JSON format.
      *
      * @var string
      */
-    const JSON = 'application/json';
+    public const JSON = 'application/json';
 
     /**
      * TEXT format.
      *
      * @var string
      */
-    const TEXT = 'text/plain';
+    public const TEXT = 'text/plain';
 
     /**
      * XML format.
      *
      * @var string
      */
-    const XML = 'application/xml';
+    public const XML = 'application/xml';
 }

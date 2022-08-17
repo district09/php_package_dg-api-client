@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gent\Tests\API\Service;
+namespace DigipolisGent\Tests\API\Service;
 
 use DigipolisGent\API\Client\ClientInterface;
 use DigipolisGent\API\Service\ServiceAbstract;
