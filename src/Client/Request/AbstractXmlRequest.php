@@ -6,12 +6,11 @@ namespace DigipolisGent\API\Client\Request;
 
 use DigipolisGent\API\Client\Uri\UriInterface;
 use GuzzleHttp\Psr7\Request;
-use Psr\Http\Message\RequestInterface;
 
 /**
  * Abstract request requesting XML response.
  */
-abstract class AbstractXmlRequest extends Request implements RequestInterface
+abstract class AbstractXmlRequest extends Request
 {
     /**
      * Constructor.

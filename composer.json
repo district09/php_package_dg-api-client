@@ -39,7 +39,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Gent\\Tests\\API\\": "tests/"
+            "DigipolisGent\\Tests\\API\\": "tests/"
         }
     },
     "config": {

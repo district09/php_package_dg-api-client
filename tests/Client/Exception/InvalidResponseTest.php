@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DigipolisGent\API\Tests\Client\Exception;
+namespace DigipolisGent\Tests\API\Client\Exception;
 
 use DigipolisGent\API\Client\Exception\InvalidResponse;
 use PHPUnit\Framework\TestCase;
@@ -21,9 +21,9 @@ class InvalidResponseTest extends TestCase
      *
      * @test
      */
-    public function exceptionCanBeCreatedFromResponse()
+    public function exceptionCanBeCreatedFromResponse(): void
     {
-        $data = json_encode(['value' => uniqid()]);
+        $data = json_encode(['value' => uniqid('', true)], JSON_THROW_ON_ERROR);
         $statusCode = random_int(200, 500);
 
         $response = $this->prophesize(ResponseInterface::class);

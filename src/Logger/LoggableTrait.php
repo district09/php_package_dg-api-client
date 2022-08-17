@@ -14,7 +14,7 @@ trait LoggableTrait
      *
      * @var \DigipolisGent\API\Logger\LoggerInterface[]
      */
-    protected $loggers = [];
+    protected array $loggers = [];
 
     /**
      * Add a logger to an object.

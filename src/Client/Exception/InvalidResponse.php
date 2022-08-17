@@ -14,7 +14,7 @@ final class InvalidResponse extends Exception
     /**
      * @var string
      */
-    protected $body;
+    protected string $body;
 
     /**
      * InvalidResponse constructor.
@@ -23,7 +23,7 @@ final class InvalidResponse extends Exception
      * @param string $body
      * @param int $code
      */
-    public function __construct(string $message, $body = '', $code = 0)
+    public function __construct(string $message, string $body = '', int $code = 0)
     {
         $this->body = $body;
         parent::__construct($message, $code);
