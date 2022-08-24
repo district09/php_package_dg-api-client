@@ -2,6 +2,12 @@
 
 All Notable changes to `digipolisgent/api-client` package.
 
+## [3.0.1]
+
+### Fixed
+
+* Fix minimal supported Guzzle version: Drupal recommended still uses Guzzle 6.
+
 ## [3.0.0]
 
 ### Added
@@ -76,6 +82,7 @@ This includes:
 * Interfaces to create services in client packages.
 
 [Unreleased]: https://github.com/digipolisgent/php_package_dg-api-client/compare/master...develop
+[3.0.1]: https://github.com/digipolisgent/php_package_dg-api-client/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/2.1.0...3.0.0
 [2.1.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/1.2.0...2.0.0
