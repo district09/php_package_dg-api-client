@@ -7,27 +7,26 @@ namespace DigipolisGent\Tests\API\Client\Request;
 use DigipolisGent\API\Client\Request\AbstractHtmlRequest;
 use DigipolisGent\API\Client\Request\AcceptType;
 use DigipolisGent\API\Client\Request\MethodType;
-use DigipolisGent\API\Client\Uri\Uri;
+use DigipolisGent\API\Client\Uri\UriInterface;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \DigipolisGent\API\Client\Request\AbstractHtmlRequest
- */
+#[CoversClass(AbstractHtmlRequest::class)]
 class AbstractHtmlRequestTest extends TestCase
 {
     /**
      * Request has default method and accept header.
-     *
-     * @test
      */
+    #[Test]
     public function requestHasProperMethodAndHeaders(): void
     {
-        $request = $this->getMockForAbstractClass(
-            AbstractHtmlRequest::class,
-            [new Uri('/test')]
-        );
+        $uri = $this->createMock(UriInterface::class);
+        $uri->method('getUri')->willReturn('/test');
 
-        $this->assertEquals(MethodType::GET, $request->getMethod());
-        $this->assertEquals([AcceptType::HTML], $request->getHeader('Accept'));
+        $request = new class ($uri) extends AbstractHtmlRequest {
+        };
+
+        $this->assertSame(MethodType::GET, $request->getMethod());
+        $this->assertSame([AcceptType::HTML], $request->getHeader('Accept'));
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DigipolisGent\Tests\API\Cache;
 
 use DigipolisGent\API\Cache\CacheableTrait;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\SimpleCache\CacheInterface;
@@ -19,9 +20,8 @@ class CacheableTraitTest extends TestCase
 
     /**
      * False is returned is cache is set without cache service.
-     *
-     * @test
      */
+    #[Test]
     public function cacheSetWithoutCache(): void
     {
         $key = uniqid('', true);
@@ -32,9 +32,8 @@ class CacheableTraitTest extends TestCase
 
     /**
      * False is returned if cache is deleted without cache service.
-     *
-     * @test
      */
+    #[Test]
     public function cacheDeletedWithoutCache(): void
     {
         $key = uniqid('', true);
@@ -44,9 +43,8 @@ class CacheableTraitTest extends TestCase
 
     /**
      * False is returned when all cache is cleared without cache service.
-     *
-     * @test
      */
+    #[Test]
     public function cacheClearWithoutCache(): void
     {
         $this->assertFalse($this->cacheClear());
@@ -54,9 +52,8 @@ class CacheableTraitTest extends TestCase
 
     /**
      * Null is returned when item is retrieved from cache without cache service.
-     *
-     * @test
      */
+    #[Test]
     public function cacheGetWithoutCache(): void
     {
         $key = uniqid('', true);
@@ -66,9 +63,8 @@ class CacheableTraitTest extends TestCase
 
     /**
      * True is returned when value is stored in cache service.
-     *
-     * @test
      */
+    #[Test]
     public function cacheSetWithCache(): void
     {
         $key = uniqid('', true);
@@ -87,9 +83,8 @@ class CacheableTraitTest extends TestCase
 
     /**
      * True is returned when the value is deleted from the cache service.
-     *
-     * @test
      */
+    #[Test]
     public function cacheDeletedWithCache(): void
     {
         $key = uniqid('', true);
@@ -106,9 +101,8 @@ class CacheableTraitTest extends TestCase
 
     /**
      * True is returned when all cache is cleared from cache service.
-     *
-     * @test
      */
+    #[Test]
     public function cacheClearWithCache(): void
     {
         $cacheService = $this->prophesize(CacheInterface::class);
@@ -123,9 +117,8 @@ class CacheableTraitTest extends TestCase
 
     /**
      * Value can be retrieved from the cache backend.
-     *
-     * @test
      */
+    #[Test]
     public function cacheGetWithCache(): void
     {
         $key = uniqid('', true);

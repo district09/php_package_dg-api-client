@@ -2,6 +2,16 @@
 
 All Notable changes to `digipolisgent/api-client` package.
 
+## [4.0.0]
+
+_Use version 4 of this module to switch over to OAuth authentication.
+Key/secret authentication is dropped from the client.
+The client and configuration objects have changed parameters._
+
+### Added
+
+* ZALENZOEK-689: Add OAuth2 API authentication.
+
 ## [3.0.1]
 
 ### Fixed
@@ -82,6 +92,7 @@ This includes:
 * Interfaces to create services in client packages.
 
 [Unreleased]: https://github.com/digipolisgent/php_package_dg-api-client/compare/master...develop
+[4.0.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/3.0.1...4.0.0
 [3.0.1]: https://github.com/digipolisgent/php_package_dg-api-client/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/2.1.0...3.0.0
 [2.1.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/2.0.0...2.1.0
