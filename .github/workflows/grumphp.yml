@@ -1,0 +1,104 @@
+name: Run GrumPHP
+
+on:
+  workflow_call:
+    inputs:
+      php-versions:
+        description: The PHP versions to run on
+        required: false
+        type: string
+        default: "['8.3', '8.4']"
+      operating-systems:
+        description: The operating systems to run on
+        required: false
+        type: string
+        default: "['ubuntu-latest']"
+      composer-versions:
+        description: The composer versions to run on
+        required: false
+        type: string
+        default: "['composer:v2']"
+      tasks:
+        description: The grumphp tasks to run
+        required: false
+        type: string
+        default: ''
+      coverage-report:
+        description: Should the coverage report, when available, be added to the Pull Request as a comment
+        required: false
+        type: boolean
+        default: false
+      before-install:
+        description: Script to run before running composer install
+        required: false
+        type: string
+        default: ''
+      before-test:
+        description: Script to run before running the test
+        required: false
+        type: string
+        default: ''
+      simpletest_db:
+        description: Drupal test database connection string
+        required: false
+        type: string
+        default: 'sqlite://localhost/:memory:'
+    secrets:
+      GH_TOKEN:
+        required: false
+jobs:
+  grumphp:
+    strategy:
+      matrix:
+        operating-system: ${{ fromJson(inputs.operating-systems) }}
+        php-versions: ${{ fromJson(inputs.php-versions) }}
+        composer-versions: ${{ fromJson(inputs.composer-versions) }}
+      fail-fast: false
+    runs-on: ${{ matrix.operating-system }}
+    name: PHP ${{ matrix.php-versions }} with ${{ matrix.composer-versions }} on ${{ matrix.operating-system }}
+    env:
+      SIMPLETEST_DB: ${{ inputs.simpletest_db }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          tools: ${{ matrix.composer-versions }}
+          extensions: xdebug, mbstring, posix, :redis
+      - name: Get composer cache directory
+        id: composercache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composercache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+      - name: Set Github secret for composer
+        if: env.GH_TOKEN
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          composer config --global github-oauth.github.com ${{ secrets.GH_TOKEN }}
+      - name: Run before install commands
+        if: ${{ inputs.before-install != '' }}
+        run: ${{ inputs.before-install }}
+      - name: Install dependencies
+        run: |
+          composer install --no-progress --no-suggest --no-scripts
+      - name: Run before test commands
+        if: ${{ inputs.before-test != '' }}
+        run: ${{ inputs.before-test }}
+      - name: Run the tests
+        run: php vendor/bin/grumphp run --no-interaction --tasks='${{ inputs.tasks }}'
+
+      # Add comment to PR with the code coverage report.
+      - name: Coverage Report as Comment (Clover)
+        if: ${{ github.event_name == 'pull_request' && inputs.coverage-report && hashFiles('build/logs/clover.xml') != '' }}
+        uses: lucassabreu/comment-coverage-clover@main
+        with:
+          file: build/logs/clover.xml
+          with-chart: false
+          table-below-coverage: 99.99

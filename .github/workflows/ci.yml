@@ -1,0 +1,27 @@
+name: Run CI test
+
+on:
+    pull_request:
+    push:
+        branches:
+            - master
+            - develop
+            - 1.x
+            - 2.x
+            - 3.x
+            - release/**
+            - hotfix/**
+        tags:
+    workflow_dispatch:
+
+jobs:
+    grumphp:
+        uses: district09/php_package_dg-api-client/.github/workflows/grumphp.yml@develop
+        permissions:
+            contents: write
+            issues: write
+            pull-requests: write
+        with:
+            php-versions: "['8.3', '8.4']"
+            tasks: ''
+            coverage-report: true

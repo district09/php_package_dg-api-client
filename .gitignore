@@ -1,5 +1,6 @@
 # PHPUnit build artifacts.
 /build
+.phpunit.cache/
 .phpunit.result.cache
 
 # Never commit vendors!
