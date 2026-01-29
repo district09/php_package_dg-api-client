@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DigipolisGent\Tests\API\Client\Exception;
 
 use DigipolisGent\API\Client\Exception\InvalidResponse;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ResponseInterface;
@@ -18,9 +19,8 @@ class InvalidResponseTest extends TestCase
 
     /**
      * Exception can be created from response.
-     *
-     * @test
      */
+    #[Test]
     public function exceptionCanBeCreatedFromResponse(): void
     {
         $data = json_encode(['value' => uniqid('', true)], JSON_THROW_ON_ERROR);

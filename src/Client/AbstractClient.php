@@ -8,15 +8,20 @@ use DigipolisGent\API\Client\Configuration\ConfigurationInterface;
 use DigipolisGent\API\Client\Exception\HandlerNotFound;
 use DigipolisGent\API\Client\Handler\HandlerInterface;
 use DigipolisGent\API\Client\Response\ResponseInterface;
+use DigipolisGent\API\Client\Token\OidcTokenProvider;
+use DigipolisGent\API\Client\Token\TokenProviderInterface;
 use DigipolisGent\API\Logger\LoggableInterface;
 use DigipolisGent\API\Logger\LoggableTrait;
 use DigipolisGent\API\Logger\RequestLog;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\RequestInterface;
+use Psr\SimpleCache\CacheInterface;
 
 /**
  * Abstract implementation of the service client.
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 abstract class AbstractClient implements ClientInterface, LoggableInterface
 {
@@ -44,15 +49,36 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
     protected ConfigurationInterface $configuration;
 
     /**
+     * The OIDC token provider.
+     *
+     * @var \DigipolisGent\API\Client\Token\TokenProviderInterface
+     */
+    protected TokenProviderInterface $tokenProvider;
+
+    /**
      * Client constructor.
      *
      * @param \GuzzleHttp\ClientInterface $guzzle
+     *   The Guzzle HTTP client.
      * @param \DigipolisGent\API\Client\Configuration\ConfigurationInterface $configuration
+     *   The client configuration object.
+     * @param \Psr\SimpleCache\CacheInterface $cache
+     *    Cache used for auth Bearer tokens. Not that this is not for API responses.
      */
-    public function __construct(GuzzleClientInterface $guzzle, ConfigurationInterface $configuration)
-    {
+    public function __construct(
+        GuzzleClientInterface $guzzle,
+        ConfigurationInterface $configuration,
+        CacheInterface $cache,
+    ) {
         $this->guzzle = $guzzle;
         $this->configuration = $configuration;
+        $this->tokenProvider = new OidcTokenProvider(
+            $configuration->getAuthUri(),
+            $configuration->getClientId(),
+            $configuration->getClientSecret(),
+            $configuration->getScope(),
+            $cache,
+        );
     }
 
     /**
@@ -90,10 +116,15 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
      */
     protected function injectHeaders(RequestInterface $request): RequestInterface
     {
-        return $request->withHeader(
-            'Content-Length',
-            (string) strlen((string) $request->getBody())
-        );
+        return $request
+            ->withHeader(
+                'Content-Length',
+                (string) strlen((string) $request->getBody())
+            )
+            ->withHeader(
+                'Authorization',
+                'Bearer ' . $this->tokenProvider->getAccessToken()
+            );
     }
 
     /**

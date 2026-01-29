@@ -13,15 +13,16 @@ use DigipolisGent\API\Client\Response\ResponseInterface;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Exception\ClientException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
+use Psr\SimpleCache\CacheInterface;
 
-/**
- * @covers \DigipolisGent\API\Client\AbstractClient
- */
+#[CoversClass(\DigipolisGent\API\Client\AbstractClient::class)]
 class ClientTest extends TestCase
 {
     use ProphecyTrait;
@@ -42,6 +43,13 @@ class ClientTest extends TestCase
     protected ConfigurationInterface $configuration;
 
     /**
+     * Cache used for auth Bearer tokens. Not that this is not for API responses.
+     *
+     * @var \Psr\SimpleCache\CacheInterface
+     */
+    protected CacheInterface $cache;
+
+    /**
      * @var \Psr\Http\Message\RequestInterface
      */
     protected RequestInterface $request;
@@ -59,7 +67,7 @@ class ClientTest extends TestCase
     /**
      * @var \DigipolisGent\API\Client\Response\ResponseInterface
      */
-    protected $response;
+    protected ResponseInterface $response;
 
     /**
      * @inheritDoc
@@ -69,7 +77,22 @@ class ClientTest extends TestCase
         parent::setUp();
 
         $this->endpointUri = 'https://' . uniqid('', true) . '.com';
-        $this->configuration = new Configuration($this->endpointUri);
+
+        $authEndpointUri = 'https://auth.' . uniqid('', true) . '.com';
+        $clientId = 'client-id';
+        $clientSecret = 'client-secret';
+        $scope = 'scope';
+
+        $this->configuration = new Configuration(
+            $this->endpointUri,
+            $authEndpointUri,
+            $clientId,
+            $clientSecret,
+            $scope,
+        );
+
+        $cache = $this->prophesize(CacheInterface::class);
+        $this->cache = $cache->reveal();
 
         $response = $this->prophesize(ResponseInterface::class);
         $this->response = $response->reveal();
@@ -79,7 +102,7 @@ class ClientTest extends TestCase
 
         $request = $this->prophesize(RequestInterface::class);
         $request->getBody()->willReturn('123');
-        $request->withHeader('Content-Length', 3)->willReturn($request->reveal());
+        $request->withHeader(Argument::cetera())->willReturn($request->reveal());
         $this->request = $request->reveal();
 
         $guzzle = $this->prophesize(GuzzleClientInterface::class);
@@ -94,15 +117,19 @@ class ClientTest extends TestCase
 
     /**
      * Exception is thrown when client gets request that cannot be handled.
-     *
-     * @test
      */
+    #[Test]
     public function exceptionIsThrownWhenRequestHasNoHandlers(): void
     {
-        $client = $this->getMockForAbstractClass(
-            AbstractClient::class,
-            [$this->guzzle, $this->configuration]
-        );
+        $client = new class ($this->guzzle, $this->configuration, $this->cache) extends AbstractClient {
+            /**
+             * Avoid token provider side effects in unit tests.
+             */
+            protected function injectHeaders(RequestInterface $request): RequestInterface
+            {
+                return $request;
+            }
+        };
 
         $this->expectException(HandlerNotFound::class);
         $client->send($this->request);
@@ -110,54 +137,70 @@ class ClientTest extends TestCase
 
     /**
      * Client sends request and returns handler response.
-     *
-     * @test
      */
+    #[Test]
     public function handlerProcessesResponse(): void
     {
-        $client = $this->getMockForAbstractClass(
-            AbstractClient::class,
-            [$this->guzzle, $this->configuration]
-        );
+        $client = new class ($this->guzzle, $this->configuration, $this->cache) extends AbstractClient {
+            /**
+             * Avoid token provider side effects in unit tests.
+             */
+            protected function injectHeaders(RequestInterface $request): RequestInterface
+            {
+                return $request;
+            }
+        };
+
         $client->addHandler($this->handler);
 
-        $this->assertEquals($this->response, $client->send($this->request));
+        $this->assertSame($this->response, $client->send($this->request));
     }
 
     /**
      * Client exception is captured in response.
-     *
-     * @test
      */
+    #[Test]
     public function guzzleExceptionIsCapturedInResponse(): void
     {
         $exception = new ClientException('', $this->request, $this->psrResponse);
+
         $guzzle = $this->prophesize(GuzzleClientInterface::class);
         $guzzle->send(Argument::any())->willThrow($exception);
 
-        $client = $this->getMockForAbstractClass(
-            AbstractClient::class,
-            [$guzzle->reveal(), $this->configuration]
-        );
+        $client = new class ($guzzle->reveal(), $this->configuration, $this->cache) extends AbstractClient {
+            /**
+             * Avoid token provider side effects in unit tests.
+             */
+            protected function injectHeaders(RequestInterface $request): RequestInterface
+            {
+                return $request;
+            }
+        };
+
         $client->addHandler($this->handler);
 
-        $this->assertEquals($this->response, $client->send($this->request));
+        $this->assertSame($this->response, $client->send($this->request));
     }
 
     /**
      * Handlers can be retrieved from the client.
-     *
-     * @test
      */
+    #[Test]
     public function itReturnsAllAddedHandlers(): void
     {
-        $client = $this->getMockForAbstractClass(
-            AbstractClient::class,
-            [$this->guzzle, $this->configuration]
-        );
+        $client = new class ($this->guzzle, $this->configuration, $this->cache) extends AbstractClient {
+            /**
+             * Avoid token provider side effects in unit tests.
+             */
+            protected function injectHeaders(RequestInterface $request): RequestInterface
+            {
+                return $request;
+            }
+        };
+
         $client->addHandler($this->handler);
 
-        self::assertEquals(
+        self::assertSame(
             [$this->handler],
             array_values($client->getHandlers())
         );

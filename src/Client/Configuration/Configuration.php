@@ -17,6 +17,34 @@ class Configuration implements ConfigurationInterface
     protected string $endpointUri;
 
     /**
+     * Endpoint URI for the authentication.
+     *
+     * @var string
+     */
+    protected string $authEndpointUri;
+
+    /**
+     * Client ID.
+     *
+     * @var string
+     */
+    protected string $clientId;
+
+    /**
+     * Client secret.
+     *
+     * @var string
+     */
+    protected string $clientSecret;
+
+    /**
+     * Auth scope.
+     *
+     * @var string
+     */
+    protected string $scope;
+
+    /**
      * The configuration options.
      *
      * @var array
@@ -28,10 +56,33 @@ class Configuration implements ConfigurationInterface
 
     /**
      * Create new configuration.
+     *
+     * @param string $endpointUri
+     *   The endpoint URI.
+     * @param string $authEndpointUri
+     *   The authentication endpoint URI.
+     * @param string $clientId
+     *   The client ID.
+     * @param string $clientSecret
+     *   The client secret.
+     * @param string $scope
+     *   The authentication scope.
+     * @param array $options
+     *   The client extra options.
      */
-    public function __construct(string $endpointUri, array $options = [])
-    {
+    public function __construct(
+        string $endpointUri,
+        string $authEndpointUri,
+        string $clientId,
+        string $clientSecret,
+        string $scope,
+        array $options = [],
+    ) {
         $this->endpointUri = $endpointUri;
+        $this->authEndpointUri = $authEndpointUri;
+        $this->clientId = $clientId;
+        $this->clientSecret = $clientSecret;
+        $this->scope = $scope;
 
         foreach ($options as $key => $value) {
             if (!array_key_exists($key, $this->options)) {
@@ -48,6 +99,38 @@ class Configuration implements ConfigurationInterface
     public function getUri(): string
     {
         return $this->endpointUri;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAuthUri(): string
+    {
+        return $this->authEndpointUri;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getClientId(): string
+    {
+        return $this->clientId;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getClientSecret(): string
+    {
+        return $this->clientSecret;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getScope(): string
+    {
+        return $this->scope;
     }
 
     /**

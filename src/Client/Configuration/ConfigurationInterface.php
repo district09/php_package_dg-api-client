@@ -17,6 +17,34 @@ interface ConfigurationInterface
     public function getUri(): string;
 
     /**
+     * Get the authentication URI.
+     *
+     * @return string
+     */
+    public function getAuthUri(): string;
+
+    /**
+     * Get the client ID.
+     *
+     * @return string
+     */
+    public function getClientId(): string;
+
+    /**
+     * Get the client secret.
+     *
+     * @return string
+     */
+    public function getClientSecret(): string;
+
+    /**
+     * Get the scope.
+     *
+     * @return string
+     */
+    public function getScope(): string;
+
+    /**
      * Get the service version number to use.
      *
      * @return string
