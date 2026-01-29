@@ -1,4 +1,4 @@
-# DigipolsigGent API Client
+# District09 API Client
 
 This package provides interfaces and abstract implementations to create an API client.
 
