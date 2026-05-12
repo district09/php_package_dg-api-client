@@ -5,22 +5,21 @@ declare(strict_types=1);
 namespace DigipolisGent\Tests\API\Logger;
 
 use DigipolisGent\API\Logger\RequestLog;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\RequestInterface;
 
-/**
- * @covers \DigipolisGent\API\Logger\RequestLog
- */
-class RequestLogTest extends TestCase
+#[CoversClass(RequestLog::class)]
+final class RequestLogTest extends TestCase
 {
     use ProphecyTrait;
 
     /**
      * Cast to string contains all request details.
-     *
-     * @test
      */
+    #[Test]
     public function castToStringHasAllDetails(): void
     {
         $request = $this->prophesize(RequestInterface::class);

@@ -12,15 +12,15 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(AbstractHtmlRequest::class)]
-class AbstractHtmlRequestTest extends TestCase
+final class AbstractHtmlRequestTest extends TestCase
 {
     /**
-     * Request has default method and accept header.
+     * Request has a default method and accept header.
      */
     #[Test]
     public function requestHasProperMethodAndHeaders(): void
     {
-        $uri = $this->createMock(UriInterface::class);
+        $uri = $this->createStub(UriInterface::class);
         $uri->method('getUri')->willReturn('/test');
 
         $request = new class ($uri) extends AbstractHtmlRequest {

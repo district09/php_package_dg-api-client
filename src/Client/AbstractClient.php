@@ -21,7 +21,7 @@ use Psr\SimpleCache\CacheInterface;
 /**
  * Abstract implementation of the service client.
  *
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ * @SuppressWarnings("PHPMD.CouplingBetweenObjects")
  */
 abstract class AbstractClient implements ClientInterface, LoggableInterface
 {

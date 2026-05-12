@@ -22,8 +22,8 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Psr\SimpleCache\CacheInterface;
 
-#[CoversClass(\DigipolisGent\API\Client\AbstractClient::class)]
-class ClientTest extends TestCase
+#[CoversClass(AbstractClient::class)]
+final class ClientTest extends TestCase
 {
     use ProphecyTrait;
 

@@ -12,7 +12,7 @@ use DigipolisGent\API\Service\ServiceAbstract;
  *
  * @codeCoverageIgnore
  */
-class TestService extends ServiceAbstract
+final class TestService extends ServiceAbstract
 {
     /**
      * Method only for testing purposes.

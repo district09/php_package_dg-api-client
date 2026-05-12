@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace DigipolisGent\Tests\API\Client\Exception;
 
 use DigipolisGent\API\Client\Exception\InvalidResponse;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ResponseInterface;
 
-/**
- * @covers \DigipolisGent\API\Client\Exception\InvalidResponse
- */
-class InvalidResponseTest extends TestCase
+#[CoversClass(InvalidResponse::class)]
+final class InvalidResponseTest extends TestCase
 {
     use ProphecyTrait;
 

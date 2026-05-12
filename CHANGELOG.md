@@ -2,6 +2,12 @@
 
 All Notable changes to `digipolisgent/api-client` package.
 
+## [Unreleased]
+
+### Updated
+
+* Update qa-php to 2.x.
+
 ## [4.0.0]
 
 _Use version 4 of this module to switch over to OAuth authentication.

@@ -7,22 +7,21 @@ namespace DigipolisGent\Tests\API\Logger;
 use DigipolisGent\API\Logger\LoggableTrait;
 use DigipolisGent\API\Logger\LoggerInterface;
 use DigipolisGent\API\Logger\LogInterface;
+use PHPUnit\Framework\Attributes\CoversTrait;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
-/**
- * @covers \DigipolisGent\API\Logger\LoggableTrait
- */
-class LoggableTraitTest extends TestCase
+#[CoversTrait(LoggableTrait::class)]
+final class LoggableTraitTest extends TestCase
 {
     use ProphecyTrait;
     use LoggableTrait;
 
     /**
      * Log item is passed to the loggers.
-     *
-     * @test
      */
+    #[Test]
     public function logItemIsPassedToLoggers(): void
     {
         $logItem = $this->prophesize(LogInterface::class)->reveal();
