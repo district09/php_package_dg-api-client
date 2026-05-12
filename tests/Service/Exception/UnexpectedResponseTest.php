@@ -5,18 +5,17 @@ declare(strict_types=1);
 namespace DigipolisGent\Tests\API\Service\Exception;
 
 use DigipolisGent\API\Service\Exception\UnexpectedResponse;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \DigipolisGent\API\Service\Exception\UnexpectedResponse
- */
-class UnexpectedResponseTest extends TestCase
+#[CoversClass(UnexpectedResponse::class)]
+final class UnexpectedResponseTest extends TestCase
 {
     /**
      * Exception can be created from the actual and expected class name.
-     *
-     * @test
      */
+    #[Test]
     public function exceptionCanBeCreatedFromClassNames(): void
     {
         $exception = UnexpectedResponse::fromClass('Actual', 'Expected');

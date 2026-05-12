@@ -22,8 +22,8 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Psr\SimpleCache\CacheInterface;
 
-#[CoversClass(\DigipolisGent\API\Client\AbstractClient::class)]
-class ClientTest extends TestCase
+#[CoversClass(AbstractClient::class)]
+final class ClientTest extends TestCase
 {
     use ProphecyTrait;
 
@@ -98,6 +98,7 @@ class ClientTest extends TestCase
         $this->response = $response->reveal();
 
         $psrResponse = $this->prophesize(PsrResponseInterface::class);
+        $psrResponse->getStatusCode()->willReturn(200);
         $this->psrResponse = $psrResponse->reveal();
 
         $request = $this->prophesize(RequestInterface::class);

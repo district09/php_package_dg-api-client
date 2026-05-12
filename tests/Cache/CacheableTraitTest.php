@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace DigipolisGent\Tests\API\Cache;
 
 use DigipolisGent\API\Cache\CacheableTrait;
+use PHPUnit\Framework\Attributes\CoversTrait;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\SimpleCache\CacheInterface;
 
 /**
- * @covers \DigipolisGent\API\Cache\CacheableTrait
+ * Test the cacheable trait.
  */
-class CacheableTraitTest extends TestCase
+#[CoversTrait(CacheableTrait::class)]
+final class CacheableTraitTest extends TestCase
 {
     use ProphecyTrait;
     use CacheableTrait;
