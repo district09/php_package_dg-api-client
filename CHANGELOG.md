@@ -7,6 +7,8 @@ All Notable changes to `digipolisgent/api-client` package.
 ### Updated
 
 * Update qa-php to 2.x.
+* Update psr/http-message to 1.x or 2.x.
+* Update psr/simple-cache to 1.x or 2.x or 3.x.
 
 ## [4.0.0]
 

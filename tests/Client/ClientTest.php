@@ -98,6 +98,7 @@ final class ClientTest extends TestCase
         $this->response = $response->reveal();
 
         $psrResponse = $this->prophesize(PsrResponseInterface::class);
+        $psrResponse->getStatusCode()->willReturn(200);
         $this->psrResponse = $psrResponse->reveal();
 
         $request = $this->prophesize(RequestInterface::class);

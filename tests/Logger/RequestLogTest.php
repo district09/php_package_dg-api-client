@@ -10,6 +10,8 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UriInterface;
 
 #[CoversClass(RequestLog::class)]
 final class RequestLogTest extends TestCase
@@ -22,11 +24,17 @@ final class RequestLogTest extends TestCase
     #[Test]
     public function castToStringHasAllDetails(): void
     {
+        $stream = $this->prophesize(StreamInterface::class);
+        $stream->__toString()->willReturn('bodyTest');
+
+        $uri = $this->prophesize(UriInterface::class);
+        $uri->__toString()->willReturn('/uriTest');
+
         $request = $this->prophesize(RequestInterface::class);
         $request->getMethod()->willReturn('GET');
         $request->getHeaders()->willReturn(['test' => 'foo']);
-        $request->getUri()->willReturn('/uriTest');
-        $request->getBody()->willReturn('bodyTest');
+        $request->getUri()->willReturn($uri->reveal());
+        $request->getBody()->willReturn($stream->reveal());
 
         $logItem = new RequestLog($request->reveal());
 

@@ -37,7 +37,7 @@ class ResponseLog implements LogInterface
             "Response\n Status %s\n Headers %s\n Body %s\n\n",
             $this->response->getStatusCode(),
             json_encode($this->response->getHeaders(), JSON_THROW_ON_ERROR),
-            json_encode($this->response->getBody(), JSON_THROW_ON_ERROR)
+            json_encode((string) $this->response->getBody(), JSON_THROW_ON_ERROR)
         );
     }
 }
