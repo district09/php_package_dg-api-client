@@ -38,7 +38,7 @@ class RequestLog implements LogInterface
             $this->request->getMethod(),
             json_encode($this->request->getHeaders(), JSON_THROW_ON_ERROR),
             $this->request->getUri(),
-            json_encode($this->request->getBody(), JSON_THROW_ON_ERROR)
+            json_encode((string) $this->request->getBody(), JSON_THROW_ON_ERROR)
         );
     }
 }

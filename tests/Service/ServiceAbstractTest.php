@@ -5,21 +5,21 @@ declare(strict_types=1);
 namespace DigipolisGent\Tests\API\Service;
 
 use DigipolisGent\API\Client\ClientInterface;
+use DigipolisGent\API\Service\ServiceAbstract;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
-/**
- * @covers \DigipolisGent\API\Service\ServiceAbstract
- */
-class ServiceAbstractTest extends TestCase
+#[CoversClass(ServiceAbstract::class)]
+final class ServiceAbstractTest extends TestCase
 {
     use ProphecyTrait;
 
     /**
      * Service can be created with client.
-     *
-     * @test
      */
+    #[Test]
     public function serviceCanBeCreatedFromClient(): void
     {
         $client = $this->prophesize(ClientInterface::class)->reveal();

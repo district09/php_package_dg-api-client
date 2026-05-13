@@ -12,13 +12,13 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(\DigipolisGent\API\Client\Request\AbstractJsonRequest::class)]
-class AbstractJsonRequestTest extends TestCase
+#[CoversClass(AbstractJsonRequest::class)]
+final class AbstractJsonRequestTest extends TestCase
 {
     #[Test]
     public function requestHasProperMethodAndHeaders(): void
     {
-        $uri = $this->createMock(UriInterface::class);
+        $uri = $this->createStub(UriInterface::class);
         $uri->method('getUri')->willReturn('/test');
 
         $request = new class ($uri) extends AbstractJsonRequest {

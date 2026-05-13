@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace DigipolisGent\Tests\API\Client\Configuration;
 
 use DigipolisGent\API\Client\Configuration\Configuration;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \DigipolisGent\API\Client\Configuration\Configuration
- */
-class ConfigurationTest extends TestCase
+#[CoversClass(Configuration::class)]
+final class ConfigurationTest extends TestCase
 {
     /**
      * Configuration can be created without options.

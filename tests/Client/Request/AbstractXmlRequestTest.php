@@ -12,13 +12,13 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-#[CoversClass(\DigipolisGent\API\Client\Request\AbstractXmlRequest::class)]
-class AbstractXmlRequestTest extends TestCase
+#[CoversClass(AbstractXmlRequest::class)]
+final class AbstractXmlRequestTest extends TestCase
 {
     #[Test]
     public function requestHasProperMethodAndHeaders(): void
     {
-        $uri = $this->createMock(UriInterface::class);
+        $uri = $this->createStub(UriInterface::class);
         $uri->method('getUri')->willReturn('/test');
 
         $request = new class ($uri) extends AbstractXmlRequest {

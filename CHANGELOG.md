@@ -2,6 +2,14 @@
 
 All Notable changes to `digipolisgent/api-client` package.
 
+## [4.1.0]
+
+### Updated
+
+* Update qa-php to 2.x.
+* Update psr/http-message to 1.x or 2.x.
+* Update psr/simple-cache to 1.x or 2.x or 3.x.
+
 ## [4.0.0]
 
 _Use version 4 of this module to switch over to OAuth authentication.
@@ -92,6 +100,7 @@ This includes:
 * Interfaces to create services in client packages.
 
 [Unreleased]: https://github.com/digipolisgent/php_package_dg-api-client/compare/master...develop
+[4.1.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/3.0.1...4.0.0
 [3.0.1]: https://github.com/digipolisgent/php_package_dg-api-client/compare/3.0.0...3.0.1
 [3.0.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/2.1.0...3.0.0

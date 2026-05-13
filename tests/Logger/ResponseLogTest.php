@@ -5,28 +5,31 @@ declare(strict_types=1);
 namespace DigipolisGent\Tests\API\Logger;
 
 use DigipolisGent\API\Logger\ResponseLog;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
-/**
- * @covers \DigipolisGent\API\Logger\ResponseLog
- */
-class ResponseLogTest extends TestCase
+#[CoversClass(ResponseLog::class)]
+final class ResponseLogTest extends TestCase
 {
     use ProphecyTrait;
 
     /**
      * Cast to string contains all response details.
-     *
-     * @test
      */
+    #[Test]
     public function castToStringHasAllDetails(): void
     {
+        $stream = $this->prophesize(StreamInterface::class);
+        $stream->__toString()->willReturn('bodyTest');
+
         $response = $this->prophesize(ResponseInterface::class);
         $response->getStatusCode()->willReturn(400);
         $response->getHeaders()->willReturn(['test' => 'foo']);
-        $response->getBody()->willReturn('bodyTest');
+        $response->getBody()->willReturn($stream->reveal());
 
         $logItem = new ResponseLog($response->reveal());
 
