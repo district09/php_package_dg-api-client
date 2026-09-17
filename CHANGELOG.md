@@ -2,6 +2,23 @@
 
 All Notable changes to `digipolisgent/api-client` package.
 
+## [4.2.0]
+
+### Changed
+
+* Added Guzzle 8 support, allowing consumers such as Drupal 12 to resolve
+  Guzzle PSR-7 3.x while retaining Guzzle 6 and 7 compatibility.
+* Added PHP 8.5 to the continuous-integration matrix.
+* Updated development tooling to QA PHP 3.1, including shared PHPUnit 11/12
+  configuration generation.
+* Updated the README requirements, testing guidance, and continuous-integration
+  badge.
+
+### Removed
+
+* Removed the project-specific PHPUnit XML configuration, now provided by QA
+  PHP.
+
 ## [4.1.0]
 
 ### Updated
@@ -100,6 +117,7 @@ This includes:
 * Interfaces to create services in client packages.
 
 [Unreleased]: https://github.com/digipolisgent/php_package_dg-api-client/compare/master...develop
+[4.2.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/4.1.0...4.2.0
 [4.1.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/3.0.1...4.0.0
 [3.0.1]: https://github.com/digipolisgent/php_package_dg-api-client/compare/3.0.0...3.0.1
