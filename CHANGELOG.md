@@ -2,6 +2,21 @@
 
 All Notable changes to `digipolisgent/api-client` package.
 
+## [4.3.0]
+
+### Added
+
+* Added API key authentication using the `apiKey` and `applicationId` headers.
+* Added `ApiKeyConfiguration` and `LegacyConfiguration`, with a shared
+  `ClientConfigurationInterface` for endpoint, version, and timeout settings.
+* Added a v3 to v4.3 upgrade guide and offline authentication compatibility tests.
+
+### Changed
+
+* Made the client token cache optional for API key and legacy configurations;
+  OIDC still requires it. Existing OIDC configuration signatures, interface
+  methods, protected property types, and token-provider behavior are preserved.
+
 ## [4.2.0]
 
 ### Changed
@@ -117,6 +132,7 @@ This includes:
 * Interfaces to create services in client packages.
 
 [Unreleased]: https://github.com/digipolisgent/php_package_dg-api-client/compare/master...develop
+[4.3.0]: https://github.com/district09/php_package_dg-api-client/compare/4.2.0...4.3.0
 [4.2.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/4.1.0...4.2.0
 [4.1.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/4.0.0...4.1.0
 [4.0.0]: https://github.com/digipolisgent/php_package_dg-api-client/compare/3.0.1...4.0.0

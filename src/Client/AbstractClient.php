@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace DigipolisGent\API\Client;
 
+use DigipolisGent\API\Client\Configuration\ApiKeyConfigurationInterface;
+use DigipolisGent\API\Client\Configuration\ClientConfigurationInterface;
 use DigipolisGent\API\Client\Configuration\ConfigurationInterface;
 use DigipolisGent\API\Client\Exception\HandlerNotFound;
 use DigipolisGent\API\Client\Handler\HandlerInterface;
@@ -17,6 +19,7 @@ use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Http\Message\RequestInterface;
 use Psr\SimpleCache\CacheInterface;
+use InvalidArgumentException;
 
 /**
  * Abstract implementation of the service client.
@@ -49,6 +52,13 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
     protected ConfigurationInterface $configuration;
 
     /**
+     * Shared configuration for all authentication methods.
+     *
+     * @var \DigipolisGent\API\Client\Configuration\ClientConfigurationInterface
+     */
+    protected ClientConfigurationInterface $clientConfiguration;
+
+    /**
      * The OIDC token provider.
      *
      * @var \DigipolisGent\API\Client\Token\TokenProviderInterface
@@ -60,17 +70,28 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
      *
      * @param \GuzzleHttp\ClientInterface $guzzle
      *   The Guzzle HTTP client.
-     * @param \DigipolisGent\API\Client\Configuration\ConfigurationInterface $configuration
+     * @param \DigipolisGent\API\Client\Configuration\ClientConfigurationInterface $configuration
      *   The client configuration object.
-     * @param \Psr\SimpleCache\CacheInterface $cache
-     *    Cache used for auth Bearer tokens. Not that this is not for API responses.
+     * @param \Psr\SimpleCache\CacheInterface|null $cache
+     *    Cache required for OIDC Bearer tokens, not API responses.
      */
     public function __construct(
         GuzzleClientInterface $guzzle,
-        ConfigurationInterface $configuration,
-        CacheInterface $cache,
+        ClientConfigurationInterface $configuration,
+        ?CacheInterface $cache = null,
     ) {
         $this->guzzle = $guzzle;
+        $this->clientConfiguration = $configuration;
+
+        if (!$configuration instanceof ConfigurationInterface) {
+            return;
+        }
+
+        if ($cache === null) {
+            throw new InvalidArgumentException('A token cache is required for OIDC authentication.');
+        }
+
+        // Keep the protected OIDC properties compatible with existing subclasses.
         $this->configuration = $configuration;
         $this->tokenProvider = new OidcTokenProvider(
             $configuration->getAuthUri(),
@@ -116,15 +137,25 @@ abstract class AbstractClient implements ClientInterface, LoggableInterface
      */
     protected function injectHeaders(RequestInterface $request): RequestInterface
     {
-        return $request
-            ->withHeader(
-                'Content-Length',
-                (string) strlen((string) $request->getBody())
-            )
-            ->withHeader(
+        $request = $request->withHeader(
+            'Content-Length',
+            (string) strlen((string) $request->getBody())
+        );
+
+        if ($this->clientConfiguration instanceof ConfigurationInterface) {
+            return $request->withHeader(
                 'Authorization',
                 'Bearer ' . $this->tokenProvider->getAccessToken()
             );
+        }
+
+        if ($this->clientConfiguration instanceof ApiKeyConfigurationInterface) {
+            return $request
+                ->withHeader('apiKey', $this->clientConfiguration->getApiKey())
+                ->withHeader('applicationId', $this->clientConfiguration->getApplicationId());
+        }
+
+        return $request;
     }
 
     /**

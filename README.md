@@ -31,6 +31,10 @@ See the examples of service packages how to use this package:
 * [gent/services/openinghours](https://github.com/StadGent/php_package_services-opening-hours)
   : Service to access the Opening Hours API and wrap the responses in value objects.
 
+See [Upgrading from v3 to v4.3](UPGRADE.md) for configuration examples
+and migration steps. Existing v4 OIDC consumers
+can upgrade to v4.3 without configuration changes.
+
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
