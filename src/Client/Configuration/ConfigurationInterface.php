@@ -7,7 +7,7 @@ namespace DigipolisGent\API\Client\Configuration;
 /**
  * Configuration used to create the client.
  */
-interface ConfigurationInterface
+interface ConfigurationInterface extends ClientConfigurationInterface
 {
     /**
      * Get the endpoint URI.
